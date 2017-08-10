@@ -1,0 +1,70 @@
+<level name="test">
+	<minion x="7.0" y="5.0" fluidRemaining="100"/>
+	<minion x="1.0" y="1.0" fluidRemaining="100"/>
+	<solid x="0.0" y="0.0"/>
+	<solid x="1.0" y="0.0"/>
+	<solid x="2.0" y="0.0"/>
+	<solid x="3.0" y="0.0"/>
+	<solid x="4.0" y="0.0"/>
+	<solid x="5.0" y="0.0"/>
+	<solid x="6.0" y="0.0"/>
+	<solid x="7.0" y="0.0"/>
+	<solid x="8.0" y="0.0"/>
+	<solid x="9.0" y="0.0"/>
+	<solid x="10.0" y="0.0"/>
+	<solid x="11.0" y="0.0"/>
+	<solid x="12.0" y="0.0"/>
+	<solid x="13.0" y="0.0"/>
+	<solid x="14.0" y="0.0"/>
+	<solid x="15.0" y="0.0"/>
+	<solid x="16.0" y="0.0"/>
+	<solid x="17.0" y="0.0"/>
+	<solid x="18.0" y="0.0"/>
+	<solid x="19.0" y="0.0"/>
+	<solid x="5.0" y="1.0"/>
+	<solid x="10.0" y="1.0"/>
+	<solid x="10.0" y="2.0"/>
+	<solid x="5.0" y="2.0"/>
+	<solid x="7.0" y="4.0"/>
+	<solid x="6.0" y="4.0"/>
+	<solid x="5.0" y="4.0"/>
+	<solid x="4.0" y="4.0"/>
+	<solid x="3.0" y="4.0"/>
+	<solid x="2.0" y="4.0"/>
+	<solid x="13.0" y="7.0"/>
+	<solid x="13.0" y="8.0"/>
+	<solid x="13.0" y="9.0"/>
+	<solid x="14.0" y="9.0"/>
+	<solid x="15.0" y="9.0"/>
+	<solid x="16.0" y="9.0"/>
+	<solid x="16.0" y="8.0"/>
+	<solid x="16.0" y="7.0"/>
+	<solid x="16.0" y="6.0"/>
+	<solid x="14.0" y="6.0"/>
+	<solid x="13.0" y="6.0"/>
+	<leftSlope x="3.0" y="5.0"/>
+	<prop x="11.5" y="1.0" type="DOMINO"/>
+	<prop x="12.5" y="1.0" type="DOMINO"/>
+	<prop x="13.5" y="1.0" type="DOMINO"/>
+	<prop x="14.5" y="1.0" type="DOMINO"/>
+	<prop x="15.5" y="1.0" type="DOMINO"/>
+	<prop x="3.5" y="5.0" type="DOMINO"/>
+	<prop x="4.0" y="5.0" type="DOMINO"/>
+	<prop x="4.5" y="5.0" type="DOMINO"/>
+	<prop x="5.0" y="5.0" type="DOMINO"/>
+	<prop x="5.5" y="5.0" type="DOMINO"/>
+	<prop x="6.0" y="5.0" type="DOMINO"/>
+	<prop x="6.5" y="5.0" type="DOMINO"/>
+	<prop x="3.0" y="14.0" type="BALL"/>
+	<well id="56c80355-b205-4fc2-a8ae-7e9e994b08c4" minX="6.0" minY="1.0" maxX="10.0" maxY="3.0" affinity="WATER"/>
+	<vat minX="14.0" minY="7.0" maxX="16.0" maxY="9.0" type="MAGMA"/>
+	<trapdoor x="3.0" y="12.0">
+		<wellActivationID>56c80355-b205-4fc2-a8ae-7e9e994b08c4</wellActivationID>
+	</trapdoor>
+	<trapdoor x="15.0" y="6.0">
+		<wellActivationID>56c80355-b205-4fc2-a8ae-7e9e994b08c4</wellActivationID>
+	</trapdoor>
+	<gear radius="3.1622777" rotatesRight="true" x="13.0" y="14.0">
+		<wellActivationID>56c80355-b205-4fc2-a8ae-7e9e994b08c4</wellActivationID>
+	</gear>
+</level>

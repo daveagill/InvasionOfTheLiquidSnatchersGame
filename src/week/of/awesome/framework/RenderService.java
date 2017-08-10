@@ -17,7 +17,7 @@ import com.badlogic.gdx.utils.Disposable;
 
 public class RenderService implements Disposable {
 	private GL20 gl;
-	private SpriteBatch batch = new SpriteBatch();
+	public SpriteBatch batch = new SpriteBatch();
 	
 	private OrthographicCamera camera  = new OrthographicCamera();
 	private int width, height;
@@ -76,21 +76,31 @@ public class RenderService implements Disposable {
 	}
 	
 	public void drawScreen(Texture t, float alpha) {
+		Matrix4 prevMatToRestore = new Matrix4(batch.getTransformMatrix());
+		batch.setTransformMatrix(new Matrix4());
 		batch.setColor(new Color(1f, 1f, 1f, alpha));
 		batch.draw(t, 0, 0, width, height);
 		batch.setColor(Color.WHITE);
+		batch.setTransformMatrix(prevMatToRestore);
 	}
 	
-	public void drawToScreen(FrameBuffer fb, ShaderProgram s) {
+	public void drawToScreen(FrameBuffer fb, ShaderProgram s, int overfitting) {
+		Matrix4 prevMatToRestore = new Matrix4(batch.getTransformMatrix());
+		batch.setTransformMatrix(new Matrix4());
 		batch.setShader(s);
-		batch.draw(fb.getColorBufferTexture(), 0, height, width, -height);
+		batch.draw(fb.getColorBufferTexture(), -overfitting, height + overfitting, width + overfitting*2, -height-overfitting*2);
 		batch.setShader(null);
+		batch.setTransformMatrix(prevMatToRestore);
+	}
+	
+	public void drawTinted(Texture t, Vector2 pos, float width, float height, Color colour) {
+		batch.setColor(colour);
+		batch.draw(t, pos.x, pos.y, width, height);
+		batch.setColor(Color.WHITE);
 	}
 	
 	public void draw(Texture t, Vector2 pos, float width, float height, float alpha) {
-		batch.setColor(new Color(1f, 1f, 1f, alpha));
-		batch.draw(t, pos.x, pos.y, width, height);
-		batch.setColor(Color.WHITE);
+		drawTinted(t, pos, width, height, new Color(1f, 1f, 1f, alpha));
 	}
 	
 	public void drawCentered(Texture t, Vector2 pos, float width, float height, boolean flipX) {
@@ -102,6 +112,17 @@ public class RenderService implements Disposable {
 		batch.setColor(colour);
 		batch.draw(t, pos.x - actualWidth/2, pos.y - height/2, actualWidth, height);
 		batch.setColor(Color.WHITE);
+	}
+	
+	public void drawCentered(Texture t, Vector2 pos, float width, float height, boolean flipX, float alpha) {
+		float actualWidth = flipX ? -width : width;
+		batch.setColor(1f, 1f, 1f, alpha);
+		batch.draw(t, pos.x - actualWidth/2, pos.y - height/2, actualWidth, height);
+		batch.setColor(Color.WHITE);
+	}
+	
+	public void drawRotated(Texture t, Vector2 pos, float width, float height, float rotation, Vector2 preRotationOffset) {
+		batch.draw(t, pos.x + preRotationOffset.x, pos.y + preRotationOffset.y, -preRotationOffset.x, -preRotationOffset.y, width, height, 1f, 1f, rotation, 0, 0, t.getWidth(), t.getHeight(), false, false);
 	}
 	
 	public GlyphLayout drawFont(BitmapFont font, String str, float x, float y, float alpha) {

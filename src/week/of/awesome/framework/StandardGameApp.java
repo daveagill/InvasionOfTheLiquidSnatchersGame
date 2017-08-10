@@ -55,7 +55,7 @@ public class StandardGameApp implements ApplicationListener {
 			services.physics.update(FIXED_TIMESTEP);
 			GameState nextState = currentState.update(FIXED_TIMESTEP);
 			if (nextState != null) {
-				services.input.removeAllKeyWatchers();
+				services.input.removeAllWatchers();
 				services.physics.setContactListener(null);
 				
 				currentState.onExit();

@@ -7,7 +7,7 @@ import week.of.awesome.framework.StandardGameApp;
 public class Game {
 
 	public static ApplicationListener create() {
-		EmptyGameState initialGameState = new EmptyGameState();
+		PlayGameState initialGameState = new PlayGameState();
 		return new StandardGameApp(initialGameState);
 	}
 
