@@ -18,7 +18,7 @@ public class DominosBrush implements Brush {
 	public void endBrush(Level level, int x, int y) {
 		if (x < initialX) { return; }
 		
-		for (float dominoX = initialX; dominoX < x+1; dominoX += 0.5f) {
+		for (float dominoX = initialX; dominoX < x+1; dominoX += 0.8f) {
 			PropSpec spec = new PropSpec();
 			spec.position = new Vector2(dominoX, y);
 			spec.type = PropSpec.Type.DOMINO;

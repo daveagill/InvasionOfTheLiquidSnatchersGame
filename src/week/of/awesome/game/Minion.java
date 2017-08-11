@@ -3,26 +3,26 @@ package week.of.awesome.game;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 
-public class Minion {
-	private int fluidRemaining;
+public class Minion implements Beamable {
 	private boolean alive = true;
 	private Body body;
 	private Vector2 positionWhenDead;
-	private float ghostAscention = 0f;
+	private float deathAnimation = 1f;
+	private boolean inBeam;
 	
 	public Minion(MinionSpec spec, Body b) {
-		fluidRemaining = spec.fluidRemaining;
 		this.body = b;
 	}
 	
-	public int getFluidRemaining() { return fluidRemaining; }
-	public boolean isGhost() { return !alive; }
+	public Body getBody() { return body; }
+	public boolean isDead() { return !alive; }
 	
-	public boolean deathSceneComplete() { return ghostAscention >= 3f; }
+	public float deathAnimationTween() { return deathAnimation; }
+	public boolean deathSceneComplete() { return deathAnimation <= 0f; }
 	
 	public Vector2 getPosition() {
-		if (isGhost()) {
-			return positionWhenDead.cpy().add(0.1f * ghostAscention, 1.5f * ghostAscention);
+		if (isDead()) {
+			return positionWhenDead;
 		}
 		return body.getPosition();
 	}
@@ -31,14 +31,32 @@ public class Minion {
 		if (alive) {
 			alive = false;
 			positionWhenDead = body.getPosition().cpy();
+			body = null;
 			return true;
 		}
 		return false;
 	}
 	
 	public void update(float dt) {
-		if (isGhost()) {
-			ghostAscention += dt;
+		if (isDead()) {
+			deathAnimation -= dt * 0.3f;
 		}
+		
+		if (inBeam) {
+			body.setLinearVelocity(4, body.getLinearVelocity().y * 0.5f);
+		}
+	}
+
+	@Override
+	public void onEnterBeam(Beam b) {
+		inBeam = true;
+		body.setGravityScale(0);
+		body.setLinearVelocity(0, 0);
+	}
+
+	@Override
+	public void onExitBeam() {
+		inBeam = false;
+		body.setGravityScale(1);
 	}
 }

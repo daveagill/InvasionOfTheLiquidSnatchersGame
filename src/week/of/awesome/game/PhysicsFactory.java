@@ -21,6 +21,7 @@ public class PhysicsFactory {
 	public static final short ENTITY = 0x0004;   // 0000000000000100
 	public static final short KILLSPOT = 0x0008; // 0000000000001000
 	public static final short PROPLIKE = 0x0010; // 0000000000010000
+	public static final short BEAM = 0x0020;     // 0000000000010000
 	
 	public static class BodySet {
 		public Body main;
@@ -93,7 +94,7 @@ public class PhysicsFactory {
 		FixtureDef fixtureDef = new FixtureDef();
 		fixtureDef.shape = triangle;
 		fixtureDef.filter.categoryBits = SCENERY;
-		fixtureDef.friction = 1f;
+		fixtureDef.friction = 0f;
 		//fixtureDef.restitution = 1;
 		
 		b.createFixture(fixtureDef);
@@ -219,9 +220,10 @@ public class PhysicsFactory {
 		FixtureDef fixtureDef = new FixtureDef();
 		fixtureDef.shape = circle;
 		fixtureDef.filter.categoryBits = ENTITY;
-		fixtureDef.filter.maskBits = SCENERY | PROPLIKE;
+		fixtureDef.filter.maskBits = SCENERY | PROPLIKE | BEAM;
 		fixtureDef.friction = 1f;
 		fixtureDef.restitution = 0f;
+		fixtureDef.density=0.1f;
 		
 		CircleShape headShape = new CircleShape();
 		headShape.setRadius(0.1f);
@@ -268,7 +270,7 @@ public class PhysicsFactory {
 		Body b = physics.createBody(bodyDef);
 		
 		PolygonShape box = new PolygonShape();
-		box.setAsBox(0.05f, 0.5f, new Vector2(0.05f, 0.5f), 0f);
+		box.setAsBox(0.05f, 0.7f, new Vector2(0.05f, 0.7f), 0f);
 		
 		
 		FixtureDef fixtureDef = new FixtureDef();
@@ -313,5 +315,27 @@ public class PhysicsFactory {
 		b.createFixture(fixtureDef);
 		
 		return new BodySet(b, hingeBody);
+	}
+	
+	public Body createBeam(Vector2 minPosition, Vector2 maxPosition) {
+		BodyDef bodyDef = new BodyDef();
+		bodyDef.type = BodyDef.BodyType.StaticBody;
+		bodyDef.position.set(minPosition);
+		
+		Body b = physics.createBody(bodyDef);
+		
+		float width = maxPosition.x - minPosition.x;
+		float height = maxPosition.y - minPosition.y;
+		PolygonShape box = new PolygonShape();
+		box.setAsBox(width/2, height/2, new Vector2(width/2, height/2), 0f);
+		
+		FixtureDef fixtureDef = new FixtureDef();
+		fixtureDef.shape = box;
+		fixtureDef.isSensor = true;
+		fixtureDef.filter.categoryBits = BEAM;
+		fixtureDef.filter.maskBits = ENTITY | PROPLIKE;
+		b.createFixture(fixtureDef);
+		
+		return b;
 	}
 }

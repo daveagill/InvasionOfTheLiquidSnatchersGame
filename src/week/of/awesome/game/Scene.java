@@ -3,6 +3,7 @@ package week.of.awesome.game;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Random;
 
@@ -30,16 +31,20 @@ public class Scene implements Disposable {
 	private Collection<Vector2> rightSlopes;
 	private Collection<Minion> minions = new ArrayList<>();
 	private Collection<Prop> props = new ArrayList<>();
+	private Collection<Beam> beams = new ArrayList<>();
 	private Map<String, Well> wellsByID = new HashMap<>();
+	
+	// activatables
 	private Collection<Platform> platforms = new ArrayList<>();
 	private Collection<TrapDoor> trapdoors = new ArrayList<>();
 	private Collection<Gear> gears = new ArrayList<>();
+	private Collection<Spaceship> spaceships = new ArrayList<>();
 	
 	private boolean isSpraying = false;
 	private Vector2 sprayDirection = new Vector2(1f, 1f);
 	private Minion activeMinion;
 	
-	private boolean isGameOver = false;
+	private Vector2 aimPos = new Vector2();
 	
 	
 	public Scene(WorldEvents events, Level level, PhysicsService physicsService) {
@@ -73,7 +78,6 @@ public class Scene implements Disposable {
 		// MINIONS
 		for (MinionSpec minionSpec : level.minions) {
 			Body b = physics.createMinion(minionSpec.position.cpy().add(0.5f, 0));
-			persistentBodies.add(b);
 			Minion m = new Minion(minionSpec, b);
 			minions.add(m);
 			b.setUserData(m);
@@ -110,6 +114,14 @@ public class Scene implements Disposable {
 			}
 		}
 		
+		// BEAMS
+		for (BeamSpec beamSpec : level.beams) {
+			Body body = physics.createBeam(beamSpec.min, beamSpec.max);
+			persistentBodies.add(body);
+			Beam beam = new Beam(beamSpec);
+			beams.add(beam);
+		}
+		
 		// PLATFORMS
 		for (PlatformSpec platformSpec : level.platforms) {
 			Body b = physics.createPlatform(platformSpec.position);
@@ -135,6 +147,13 @@ public class Scene implements Disposable {
 			Gear g = new Gear(gearSpec, bodies.main);
 			gears.add(g);
 			wireToWells(g, gearSpec);
+		}
+		
+		// SPACESHIPS
+		for (SpaceshipSpec spaceshipSpec : level.spaceships) {
+			Spaceship s = new Spaceship(spaceshipSpec);
+			spaceships.add(s);
+			wireToWells(s, spaceshipSpec);
 		}
 	}
 	
@@ -172,6 +191,10 @@ public class Scene implements Disposable {
 		return wellsByID.values();
 	}
 	
+	public Collection<Beam> getBeams() {
+		return beams;
+	}
+	
 	public Collection<Platform> getPlatforms() {
 		return platforms;
 	}
@@ -184,14 +207,29 @@ public class Scene implements Disposable {
 		return gears;
 	}
 	
+	public Collection<Spaceship> getSpaceships() {
+		return spaceships;
+	}
+	
+	public Vector2 getAimPos() {
+		return aimPos;
+	}
+	
 	public void aim(float x, float y) {
+		aimPos.set(x, y);
+		
 		if (!isSpraying) {
 			// find the nearest minion within range
-			activeMinion = null;
+			Minion nearestMinion = null;
 			for (Minion m : minions) {
-				if (Vector2.dst2(x, y, m.getPosition().x, m.getPosition().y) < MINION_AIM_RANGE*MINION_AIM_RANGE) {
-					activeMinion = m;
+				if (!m.isDead() && Vector2.dst2(x, y, m.getPosition().x, m.getPosition().y) < MINION_AIM_RANGE*MINION_AIM_RANGE) {
+					nearestMinion = m;
 				}
+			}
+			
+			// if we found one then set it to be the active minion
+			if (nearestMinion != null) {
+				this.activeMinion = nearestMinion;
 			}
 		}
 		
@@ -202,9 +240,6 @@ public class Scene implements Disposable {
 	
 	public void spray(boolean active) {
 		this.isSpraying = active;
-		if (!isSpraying) {
-			activeMinion = null;
-		}
 	}
 	
 	void onCaptureDroplet(Droplet d, Well w) {
@@ -215,8 +250,10 @@ public class Scene implements Disposable {
 		}
 	}
 	
-	void onPlayerDeath(Minion m) {
+	void onMinionDeath(Minion m) {
+		Body b = m.getBody();
 		if (m.notifyDeath()) {
+			physics.destroy(b);
 			Random r = new Random();
 			for (int i = 0; i < 70; ++i) {
 				float xRand = r.nextFloat()-0.5f;
@@ -226,23 +263,47 @@ public class Scene implements Disposable {
 				fluid.spawnParticle(Droplet.Type.BLOOD, m.getPosition().cpy().add(xRand, yRand), new Vector2(xVelRand, yVelRand), false);
 			}
 			events.minionDeath(m);
+			
+			if (m == activeMinion) {
+				activeMinion = null;
+			}
 		}
+	}
+	
+	void onCaughtInBeam(Beam beam, Beamable item) {
+		item.onEnterBeam(beam);
+	}
+	
+	void onExitBeam(Beam beam, Beamable item) {
+		item.onExitBeam();
 	}
 	
 	public void update(float dt) {
 		contactListener.dispatchCollisionEvents();
 		
-		for (Minion m : minions) {
+		Iterator<Minion> minionIter = minions.iterator();
+		while (minionIter.hasNext()) {
+			Minion m = minionIter.next();
 			m.update(dt);
 			
-			if (!isGameOver && m.deathSceneComplete()) {
-				isGameOver = true;
-				events.gameOver();
+			if (m.deathSceneComplete()) {
+				minionIter.remove();
+			}
+			
+			// cleanup minions falling to infinity
+			if (m.getPosition().y < -1000) {
+				persistentBodies.remove(m.getBody());
+				physics.destroy(m.getBody());
+				minionIter.remove();
 			}
 		}
 		
+		if (minions.isEmpty()) {
+			events.gameOver();
+		}
+		
 		if (isSpraying && activeMinion != null) {
-			fluid.spawnParticle(Droplet.Type.WATER, activeMinion.getPosition(), sprayDirection.cpy().scl(SPRAY_SPEED), false);
+			fluid.spawnParticle(Droplet.Type.WATER, sprayDirection.cpy().scl(0.5f).add(activeMinion.getPosition()), sprayDirection.cpy().scl(SPRAY_SPEED), false);
 		}
 				
 		fluid.update(dt);
@@ -254,11 +315,32 @@ public class Scene implements Disposable {
 		for (Gear g : gears) {
 			g.update(dt);
 		}
+		
+		for (Spaceship s : spaceships) {
+			s.update(dt);
+		}
+		
+		
+		// kill props falling to infinity
+		Iterator<Prop> propIter = props.iterator();
+		while (propIter.hasNext()) {
+			Prop p = propIter.next();
+			if (p.getPosition().y < -1000) {
+				persistentBodies.remove(p.getBody());
+				physics.destroy(p.getBody());
+				propIter.remove();
+			}
+		}
 	}
 	
 	@Override
 	public void dispose() {
 		persistentBodies.forEach(physics::destroy);
+		for (Minion m : minions) {
+			if (m.getBody() != null) {
+				physics.destroy(m.getBody());
+			}
+		}
 		fluid.dispose();
 	}
 	

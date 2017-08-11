@@ -42,6 +42,8 @@ public class FluidSystem implements Disposable {
 	
 	
 	public void spawnParticle(Droplet.Type type, Vector2 position, Vector2 velocity, boolean persistent) {
+		if (!persistent && fluid.size() > 2000) { return; }
+		
 		Body b = physics.createWaterParticle(position, velocity);
 		Droplet d = new Droplet(b, type, persistent);
 		fluid.add(d);

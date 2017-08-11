@@ -18,8 +18,8 @@ public class Platform implements Activatable {
 	
 	public Vector2 getBasePosition() { return spec.position; }
 	public Vector2 getHeadPosition() { return body.getPosition(); }
-	public float getCurrentHeight() {
-		return isRaised ? spec.height : 1f;
+	public float getMaxHeight() {
+		return spec.height;
 	}
 	
 	@Override

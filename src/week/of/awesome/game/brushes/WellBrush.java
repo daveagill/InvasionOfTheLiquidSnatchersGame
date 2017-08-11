@@ -4,13 +4,21 @@ import java.util.UUID;
 
 import com.badlogic.gdx.math.Vector2;
 
+import week.of.awesome.game.Droplet;
 import week.of.awesome.game.Level;
 import week.of.awesome.game.WellSpec;
 
 public class WellBrush implements Brush {
 	
+	private Droplet.Type affinity;
 	private int initialX, initialY;
 
+	public WellBrush(Droplet.Type type) {
+		this.affinity = type;
+	}
+	
+	public String getName() { return "WellBrush(" + affinity + ")"; }
+	
 	@Override
 	public void beginBrush(Level level, int x, int y) {
 		this.initialX = x;
@@ -29,6 +37,7 @@ public class WellBrush implements Brush {
 		wellSpec.id = UUID.randomUUID().toString(); // used for wiring purposes
 		wellSpec.min = new Vector2(minX, minY);
 		wellSpec.max = new Vector2(maxX, maxY);
+		wellSpec.affinity = affinity;
 		
 		level.wells.add(wellSpec);
 	}

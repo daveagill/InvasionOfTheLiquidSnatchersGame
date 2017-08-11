@@ -75,13 +75,22 @@ public class RenderService implements Disposable {
 		batch.setTransformMatrix(m);
 	}
 	
-	public void drawScreen(Texture t, float alpha) {
+	public void drawScreen(Texture t, boolean repeating, Color colour) {
 		Matrix4 prevMatToRestore = new Matrix4(batch.getTransformMatrix());
 		batch.setTransformMatrix(new Matrix4());
-		batch.setColor(new Color(1f, 1f, 1f, alpha));
-		batch.draw(t, 0, 0, width, height);
+		batch.setColor(colour);
+		if (repeating) {
+			batch.draw(t, 0, 0, 0, 0, width, height);
+		}
+		else {
+			batch.draw(t, 0, 0, width, height);
+		}
 		batch.setColor(Color.WHITE);
 		batch.setTransformMatrix(prevMatToRestore);
+	}
+	
+	public void drawScreen(Texture t, boolean repeating, float alpha) {
+		drawScreen(t, repeating, new Color(1f, 1f, 1f, alpha));
 	}
 	
 	public void drawToScreen(FrameBuffer fb, ShaderProgram s, int overfitting) {

@@ -7,11 +7,14 @@ import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Matrix4;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 
 import week.of.awesome.framework.FlipFlopTweener;
 import week.of.awesome.framework.GameState;
 import week.of.awesome.framework.MouseWatcher;
 import week.of.awesome.framework.Services;
+import week.of.awesome.game.brushes.BeamBrush;
 import week.of.awesome.game.brushes.Brush;
 import week.of.awesome.game.brushes.DominosBrush;
 import week.of.awesome.game.brushes.GearBrush;
@@ -21,6 +24,7 @@ import week.of.awesome.game.brushes.MinionBrush;
 import week.of.awesome.game.brushes.PropBrush;
 import week.of.awesome.game.brushes.RightSlopeBrush;
 import week.of.awesome.game.brushes.SolidBrush;
+import week.of.awesome.game.brushes.SpaceshipBrush;
 import week.of.awesome.game.brushes.TrapDoorBrush;
 import week.of.awesome.game.brushes.VatBrush;
 import week.of.awesome.game.brushes.WellBrush;
@@ -33,9 +37,10 @@ public class PlayGameState implements GameState {
 	
 	private Level level;
 	private Scene scene;
+	private Rectangle levelSize;
 	
-	private float scaleX;
-	private float scaleY;
+	private float scaleX = 30;
+	private float scaleY = 30;
 	
 	private boolean isStarting, isEnding;
 	private FlipFlopTweener screenFader = new FlipFlopTweener();
@@ -49,13 +54,16 @@ public class PlayGameState implements GameState {
 			new LeftSlopeBrush(),
 			new RightSlopeBrush(),
 			new WiringBrush(),
-			new WellBrush(),
+			new WellBrush(Droplet.Type.WATER),
+			new WellBrush(Droplet.Type.MAGMA),
 			new VatBrush(Droplet.Type.MAGMA),
 			new PlatformBrush(),
 			new TrapDoorBrush(),
+			new BeamBrush(),
 			new PropBrush(PropSpec.Type.BALL),
 			new DominosBrush(),
 			new GearBrush(),
+			new SpaceshipBrush(),
 			new MinionBrush()
 	);
 	private int currentBrushIdx = 0;
@@ -89,22 +97,7 @@ public class PlayGameState implements GameState {
 		
 		level = Level.load("test.txt");
 		this.scene = new Scene(worldEvents, level, services.physics);
-
-		scaleX = services.gfx.getWidth() / 20;
-		scaleY = services.gfx.getHeight() / 20;
-		
-		// add zoom watcher
-		services.input.addMouseWatcher(new MouseWatcher() {
-
-			@Override public void buttonDown(int screenX, int screenY, int button) { }
-			@Override public void buttonUp(int screenX, int screenY, int button) { }
-			
-			@Override
-			public void scrolled(int amount) {
-				scaleX -= amount;
-				scaleY -= amount;
-			}
-		});
+		this.levelSize = level.calculateSize();
 		
 		this.inGameMouseWatcher = new MouseWatcher() {
 			@Override
@@ -170,6 +163,12 @@ public class PlayGameState implements GameState {
 				scene.dispose();
 				scene = new Scene(worldEvents, level, services.physics);
 			}
+			
+			@Override
+			public void scrolled(int amount) {
+				scaleX -= amount;
+				scaleY -= amount;
+			}
 		};
 		
 		services.input.addMouseWatcher(inGameMouseWatcher);
@@ -184,8 +183,7 @@ public class PlayGameState implements GameState {
 	}
 
 	@Override
-	public GameState update(float dt) {
-		
+	public GameState update(float dt) {		
 		// toggle the mouse control scheme on space key
 		if (services.input.isJustDown(Keys.SPACE)) {
 			buildModeEnabled = !buildModeEnabled;
@@ -205,7 +203,7 @@ public class PlayGameState implements GameState {
 		// cycle brushes
 		if (services.input.isJustDown(Keys.BACKSLASH)) {
 			currentBrushIdx = (currentBrushIdx + 1) % brushes.size();
-			System.out.println(brushes.get(currentBrushIdx).getClass().getSimpleName());
+			System.out.println(brushes.get(currentBrushIdx).getName());
 		}
 		
 		if (services.input.isJustDown(Keys.S)) {
@@ -236,7 +234,12 @@ public class PlayGameState implements GameState {
 
 	@Override
 	public void render(float dt) {
-		services.gfx.setTransformMatrix(new Matrix4().scale(scaleX, scaleY, 1f));
+		if (!buildModeEnabled) {
+			int scaleXY = (int) (Math.min(services.gfx.getWidth() / levelSize.width, services.gfx.getHeight() / levelSize.height) - 1);
+			scaleX = scaleXY;
+			scaleY = scaleXY;
+		}
+		services.gfx.setTransformMatrix(new Matrix4().scale(scaleX, scaleY, 1f).translate(-levelSize.x, -levelSize.y, 0));
 		
 		renderer.preDraw(scene);
 		
@@ -246,7 +249,7 @@ public class PlayGameState implements GameState {
 		
 		// screen fade in/out
 		if (isStarting || isEnding) {
-			services.gfx.drawScreen(screenDarkFadeTex, 1 - screenFader.getValue());
+			services.gfx.drawScreen(screenDarkFadeTex, false, 1 - screenFader.getValue());
 		}
 		
 		services.gfx.endFrame();

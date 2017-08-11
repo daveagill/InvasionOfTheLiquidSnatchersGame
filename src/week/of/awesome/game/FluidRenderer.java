@@ -16,10 +16,10 @@ import week.of.awesome.framework.RenderService;
 
 public class FluidRenderer {
 
-	private static final Color BLOOD_COLOUR = Color.LIME;
-	private static final Color WATER_COLOUR = Color.BLUE;
-	private static final Color MAGMA_COLOUR = Color.RED;
-	private static final Color OIL_COLOUR = Color.PURPLE;
+	public static final Color BLOOD_COLOUR = Color.LIME;
+	public static final Color WATER_COLOUR = new Color(50f/255f, 132f/255f, 255f/255f, 1f);
+	public static final Color MAGMA_COLOUR = Color.RED;
+	public static final Color OIL_COLOUR = Color.PURPLE;
 	
 	private RenderService gfx;
 	
@@ -49,12 +49,15 @@ public class FluidRenderer {
 		Color c = new Color();
 		
 		for (Droplet p : particles) {
-			c.set(typeToColour(p.getType())).a = p.getAlpha();
+			c.set(typeToColour(p.getType()));
+			c.lerp(Color.WHITE, p.getFrothiness() * 0.2f + 0.05f);
+			c.a = p.getAlpha();
 			gfx.drawCenteredTinted(particleTex, p.getPosition(), 0.5f, 0.5f, false, c);
 		}
 				
-		final float wellOverfitting = 0.01f;
+		final float wellOverfitting = 0.1f;
 		for (Well well : wells) {
+			if (well.getPercentFull() <= 0) { continue; }
 			float width = well.getMaxPosition().x - well.getMinPosition().x;
 			float height = (well.getMaxPosition().y - well.getMinPosition().y) * well.getPercentFull();
 			c.set(typeToColour(well.getDropletAffinity()));
@@ -80,7 +83,7 @@ public class FluidRenderer {
 		ShaderProgram.pedantic = true;
 	}
 	
-	private Color typeToColour(Droplet.Type type) {
+	public static Color typeToColour(Droplet.Type type) {
 		switch (type) {
 			case WATER: return WATER_COLOUR;
 			case BLOOD: return BLOOD_COLOUR;

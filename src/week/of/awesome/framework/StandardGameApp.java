@@ -50,8 +50,10 @@ public class StandardGameApp implements ApplicationListener {
 		lastFrameTime = time;
 		
 		float frameSimulationTime = 0;
+		int numIterations = 0;
 		
-		while (accumulatedTime >= FIXED_TIMESTEP_NANOS) {
+		while (accumulatedTime >= FIXED_TIMESTEP_NANOS && numIterations < 2) {
+			++numIterations;
 			services.physics.update(FIXED_TIMESTEP);
 			GameState nextState = currentState.update(FIXED_TIMESTEP);
 			if (nextState != null) {

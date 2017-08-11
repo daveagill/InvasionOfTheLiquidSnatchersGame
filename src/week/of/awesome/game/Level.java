@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.XmlReader;
 import com.badlogic.gdx.utils.XmlReader.Element;
@@ -19,18 +20,27 @@ public class Level {
 	public Collection<PropSpec> props = new ArrayList<>();
 	public Collection<WellSpec> wells = new ArrayList<>();
 	public Collection<VatSpec> vats = new ArrayList<>();
+	public Collection<BeamSpec> beams = new ArrayList<>();
+	
+	// activatables
 	public Collection<PlatformSpec> platforms = new ArrayList<>();
 	public Collection<TrapDoorSpec> trapdoors = new ArrayList<>();
 	public Collection<GearSpec> gears = new ArrayList<>();
+	public Collection<SpaceshipSpec> spaceships = new ArrayList<>();
 	
 	public void removeAt(int x, int y) {
+		minions.removeIf(m -> m.position.x == x && m.position.y == y);
 		solids.remove(new Vector2(x, y));
+		leftSlopes.remove(new Vector2(x, y));
+		rightSlopes.remove(new Vector2(x, y));
 		props.removeIf(p -> p.position.x >= x && p.position.x <= x+1 && p.position.y >= y && p.position.y <= y+1);
 		wells.removeIf(w -> w.min.x <= x && x < w.max.x && w.min.y <= y && y < w.max.y);
 		vats.removeIf(v -> v.min.x <= x && x < v.max.x && v.min.y <= y && y < v.max.y);
+		beams.removeIf(b -> b.min.x <= x && x < b.max.x && b.min.y <= y && y < b.max.y);
 		platforms.removeIf(p -> p.position.x == x && p.position.y == y);
 		trapdoors.removeIf(p -> p.position.x == x && p.position.y == y);
 		gears.removeIf(g -> Vector2.dst2(x, y, g.position.x, g.position.y) < g.radius*g.radius);
+		spaceships.removeIf(s -> s.position.x == x && s.position.y == y);
 	}
 	
 	public WellSpec getWell(int x, int y) {
@@ -46,6 +56,8 @@ public class Level {
 		Collection<ActivatableSpec> activatables = new ArrayList<>();
 		activatables.addAll(platforms);
 		activatables.addAll(trapdoors);
+		activatables.addAll(gears);
+		activatables.addAll(spaceships);
 		
 		for (ActivatableSpec a : activatables) {
 			if (a.position.x == x && a.position.y == y) {
@@ -53,6 +65,23 @@ public class Level {
 			}
 		}
 		return null;
+	}
+	
+	public Rectangle calculateSize() {
+		// just based on the solids will do
+		float minX = Float.POSITIVE_INFINITY;
+		float maxX = Float.NEGATIVE_INFINITY;
+		float minY = Float.POSITIVE_INFINITY;
+		float maxY = Float.NEGATIVE_INFINITY;
+		
+		for (Vector2 p : solids) {
+			minX = Math.min(minX, p.x);
+			maxX = Math.max(maxX, p.x);
+			minY = Math.min(minY, p.y);
+			maxY = Math.max(maxY, p.y);
+		}
+		
+		return new Rectangle(minX, minY, maxX - minX, maxY - minY);
 	}
 	
 	public static void save(Level level, String filename) {
@@ -64,7 +93,6 @@ public class Level {
 			for (MinionSpec minion : level.minions) {
 				xml.element("minion")
 					.attribute("x", minion.position.x).attribute("y", minion.position.y)
-					.attribute("fluidRemaining", minion.fluidRemaining)
 					.pop();
 			}
 			
@@ -99,6 +127,14 @@ public class Level {
 					.pop();
 			}
 			
+			for (BeamSpec beam : level.beams) {
+				xml.element("beam")
+					.attribute("minX", beam.min.x).attribute("minY", beam.min.y)
+					.attribute("maxX", beam.max.x).attribute("maxY", beam.max.y)
+					.attribute("dir", beam.dir)
+					.pop();
+			}
+			
 			for (PlatformSpec platform : level.platforms) {
 				writeActivatable(
 						xml.element("platform").attribute("height", platform.height),
@@ -115,6 +151,12 @@ public class Level {
 				writeActivatable(
 						xml.element("gear").attribute("radius", gear.radius).attribute("rotatesRight", gear.rotatesRight),
 						gear).pop();
+			}
+			
+			for (SpaceshipSpec spaceship : level.spaceships) {
+				writeActivatable(
+						xml.element("spaceship"),
+						spaceship).pop();
 			}
 			
 			xml.close();
@@ -137,7 +179,7 @@ public class Level {
 	public static Level load(String filename) {
 		Element xml = null;
 		try {
-			xml = new XmlReader().parse(Gdx.files.local("assets/" + filename));
+			xml = new XmlReader().parse(Gdx.files.local(filename));
 		} catch (IOException ioe) {
 			throw new RuntimeException(ioe);
 		}
@@ -147,7 +189,6 @@ public class Level {
 		for (Element minionXml : xml.getChildrenByName("minion")) {
 			MinionSpec minion = new MinionSpec();
 			minion.position = new Vector2(minionXml.getFloatAttribute("x"), minionXml.getFloatAttribute("y"));
-			minion.fluidRemaining = minionXml.getIntAttribute("fluidRemaining");
 			level.minions.add(minion);
 		}
 		
@@ -187,6 +228,15 @@ public class Level {
 			vat.type = Droplet.Type.valueOf( vatXml.getAttribute("type") );
 		}
 		
+		for (Element beamXml : xml.getChildrenByName("beam")) {
+			BeamSpec beam = new BeamSpec();
+			level.beams.add(beam);
+			
+			beam.min = new Vector2(beamXml.getFloatAttribute("minX"), beamXml.getFloatAttribute("minY"));
+			beam.max = new Vector2(beamXml.getFloatAttribute("maxX"), beamXml.getFloatAttribute("maxY"));
+			beam.dir = BeamSpec.Direction.valueOf( beamXml.getAttribute("dir") );
+		}
+		
 		for (Element platformXml : xml.getChildrenByName("platform")) {
 			PlatformSpec platform = new PlatformSpec();
 			level.platforms.add(platform);
@@ -208,6 +258,12 @@ public class Level {
 			readActivable(gearXml, gear);
 			gear.radius = gearXml.getFloatAttribute("radius");
 			gear.rotatesRight = gearXml.getBooleanAttribute("rotatesRight");
+		}
+		
+		for (Element spaceshipXml : xml.getChildrenByName("spaceship")) {
+			SpaceshipSpec spaceship = new SpaceshipSpec();
+			level.spaceships.add(spaceship);
+			readActivable(spaceshipXml, spaceship);
 		}
 		
 		return level;

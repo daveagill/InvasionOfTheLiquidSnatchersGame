@@ -34,20 +34,35 @@ public class ContactListenerImpl implements ContactListener {
 		
 		Runnable action = null;
 		
-		// Test: killspot <--> anything
-		if (fixtureA.getFilterData().categoryBits == PhysicsFactory.KILLSPOT && objectA instanceof Minion) {
-			action = () -> scene.onPlayerDeath((Minion)objectA);
-		}
-		else if (fixtureB.getFilterData().categoryBits == PhysicsFactory.KILLSPOT && objectB instanceof Minion) {
-			action = () -> scene.onPlayerDeath((Minion)objectB);
+		// Test: droplet <-> Well
+		// optimised for fluid sim
+		if (fixtureA.getFilterData().categoryBits == PhysicsFactory.LIQUID &&
+		    fixtureB.getFilterData().categoryBits == PhysicsFactory.LIQUID) { // droplet<->droplet || droplet<->well
+			if (objectB instanceof Well) {
+				action = () -> scene.onCaptureDroplet((Droplet)objectA, (Well)objectB);
+			}
+			else if (objectA instanceof Well) {
+				action = () -> scene.onCaptureDroplet((Droplet)objectB, (Well)objectA);
+			}
+			else {
+				return;
+			}
 		}
 		
-		// Test: droplet <-> Well
-		else if (objectA instanceof Droplet && objectB instanceof Well) {
-			action = () -> scene.onCaptureDroplet((Droplet)objectA, (Well)objectB);
+		// Test: killspot <--> anything
+		if (fixtureA.getFilterData().categoryBits == PhysicsFactory.KILLSPOT && objectA instanceof Minion) {
+			action = () -> scene.onMinionDeath((Minion)objectA);
 		}
-		else if (objectA instanceof Well && objectB instanceof Droplet) {
-			action = () -> scene.onCaptureDroplet((Droplet)objectB, (Well)objectA);
+		else if (fixtureB.getFilterData().categoryBits == PhysicsFactory.KILLSPOT && objectB instanceof Minion) {
+			action = () -> scene.onMinionDeath((Minion)objectB);
+		}
+		
+		// Test: Beam <-> beamable
+		if (fixtureA.getFilterData().categoryBits == PhysicsFactory.BEAM && objectB instanceof Beamable) {
+			action = () -> scene.onCaughtInBeam((Beam)objectA, (Beamable)objectB);
+		}
+		else if (fixtureB.getFilterData().categoryBits == PhysicsFactory.BEAM && objectA instanceof Beamable) {
+			action = () -> scene.onCaughtInBeam((Beam)objectB, (Beamable)objectA);
 		}
 		
 		if (action != null) {
@@ -57,8 +72,25 @@ public class ContactListenerImpl implements ContactListener {
 
 	@Override
 	public void endContact(Contact contact) {
-		// TODO Auto-generated method stub
+		Fixture fixtureA = contact.getFixtureA();
+		Fixture fixtureB = contact.getFixtureB();
 		
+		Object objectA = fixtureA.getBody().getUserData();
+		Object objectB = fixtureB.getBody().getUserData();
+		
+		Runnable action = null;
+		
+		// Test: Beam <-> beamable
+		if (fixtureA.getFilterData().categoryBits == PhysicsFactory.BEAM && objectB instanceof Beamable) {
+			action = () -> scene.onExitBeam((Beam)objectA, (Beamable)objectB);
+		}
+		else if (fixtureB.getFilterData().categoryBits == PhysicsFactory.BEAM && objectA instanceof Beamable) {
+			action = () -> scene.onExitBeam((Beam)objectB, (Beamable)objectA);
+		}
+		
+		if (action != null) {
+			queuedActions.add(action);
+		}
 	}
 
 	@Override

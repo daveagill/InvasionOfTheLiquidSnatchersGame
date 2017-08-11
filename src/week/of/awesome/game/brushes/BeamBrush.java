@@ -2,20 +2,12 @@ package week.of.awesome.game.brushes;
 
 import com.badlogic.gdx.math.Vector2;
 
-import week.of.awesome.game.Droplet;
+import week.of.awesome.game.BeamSpec;
 import week.of.awesome.game.Level;
-import week.of.awesome.game.VatSpec;
 
-public class VatBrush implements Brush {
+public class BeamBrush implements Brush {
 	
 	private int initialX, initialY;
-	private Droplet.Type type;
-	
-	public VatBrush(Droplet.Type type) {
-		this.type = type;
-	}
-	
-	public String getName() { return "VatBrush(" + type + ")"; }
 
 	@Override
 	public void beginBrush(Level level, int x, int y) {
@@ -31,12 +23,12 @@ public class VatBrush implements Brush {
 		int maxX = Math.max(initialX, x) + 1;
 		int maxY = Math.max(initialY, y) + 1;
 		
-		VatSpec spec = new VatSpec();
+		BeamSpec spec = new BeamSpec();
 		spec.min = new Vector2(minX, minY);
 		spec.max = new Vector2(maxX, maxY);
-		spec.type = type;
+		spec.dir = BeamSpec.Direction.RIGHT;
 		
-		level.vats.add(spec);
+		level.beams.add(spec);
 	}
 
 }

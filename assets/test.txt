@@ -1,19 +1,12 @@
 <level name="test">
-	<minion x="7.0" y="5.0" fluidRemaining="100"/>
-	<minion x="1.0" y="1.0" fluidRemaining="100"/>
-	<solid x="0.0" y="0.0"/>
-	<solid x="1.0" y="0.0"/>
-	<solid x="2.0" y="0.0"/>
-	<solid x="3.0" y="0.0"/>
-	<solid x="4.0" y="0.0"/>
+	<minion x="7.0" y="5.0"/>
+	<minion x="16.0" y="11.0"/>
 	<solid x="5.0" y="0.0"/>
 	<solid x="6.0" y="0.0"/>
 	<solid x="7.0" y="0.0"/>
 	<solid x="8.0" y="0.0"/>
 	<solid x="9.0" y="0.0"/>
 	<solid x="10.0" y="0.0"/>
-	<solid x="11.0" y="0.0"/>
-	<solid x="12.0" y="0.0"/>
 	<solid x="13.0" y="0.0"/>
 	<solid x="14.0" y="0.0"/>
 	<solid x="15.0" y="0.0"/>
@@ -23,7 +16,6 @@
 	<solid x="19.0" y="0.0"/>
 	<solid x="5.0" y="1.0"/>
 	<solid x="10.0" y="1.0"/>
-	<solid x="10.0" y="2.0"/>
 	<solid x="5.0" y="2.0"/>
 	<solid x="7.0" y="4.0"/>
 	<solid x="6.0" y="4.0"/>
@@ -39,32 +31,173 @@
 	<solid x="16.0" y="9.0"/>
 	<solid x="16.0" y="8.0"/>
 	<solid x="16.0" y="7.0"/>
-	<solid x="16.0" y="6.0"/>
 	<solid x="14.0" y="6.0"/>
 	<solid x="13.0" y="6.0"/>
+	<solid x="16.0" y="1.0"/>
+	<solid x="13.0" y="1.0"/>
+	<solid x="2.0" y="5.0"/>
+	<solid x="2.0" y="6.0"/>
+	<solid x="2.0" y="7.0"/>
+	<solid x="2.0" y="8.0"/>
+	<solid x="2.0" y="9.0"/>
+	<solid x="2.0" y="10.0"/>
+	<solid x="2.0" y="11.0"/>
+	<solid x="2.0" y="12.0"/>
+	<solid x="2.0" y="13.0"/>
+	<solid x="2.0" y="14.0"/>
+	<solid x="2.0" y="15.0"/>
+	<solid x="4.0" y="15.0"/>
+	<solid x="3.0" y="15.0"/>
+	<solid x="26.0" y="21.0"/>
+	<solid x="25.0" y="21.0"/>
+	<solid x="24.0" y="21.0"/>
+	<solid x="23.0" y="21.0"/>
+	<solid x="23.0" y="21.0"/>
+	<solid x="22.0" y="21.0"/>
+	<solid x="21.0" y="21.0"/>
+	<solid x="20.0" y="21.0"/>
+	<solid x="19.0" y="21.0"/>
+	<solid x="17.0" y="21.0"/>
+	<solid x="16.0" y="21.0"/>
+	<solid x="18.0" y="21.0"/>
+	<solid x="15.0" y="21.0"/>
+	<solid x="14.0" y="21.0"/>
+	<solid x="12.0" y="21.0"/>
+	<solid x="4.0" y="16.0"/>
+	<solid x="4.0" y="17.0"/>
+	<solid x="4.0" y="18.0"/>
+	<solid x="4.0" y="19.0"/>
+	<solid x="4.0" y="20.0"/>
+	<solid x="4.0" y="21.0"/>
+	<solid x="5.0" y="21.0"/>
+	<solid x="6.0" y="21.0"/>
+	<solid x="6.0" y="21.0"/>
+	<solid x="7.0" y="21.0"/>
+	<solid x="8.0" y="21.0"/>
+	<solid x="9.0" y="21.0"/>
+	<solid x="10.0" y="21.0"/>
+	<solid x="11.0" y="21.0"/>
+	<solid x="13.0" y="21.0"/>
+	<solid x="27.0" y="21.0"/>
+	<solid x="27.0" y="21.0"/>
+	<solid x="28.0" y="21.0"/>
+	<solid x="29.0" y="21.0"/>
+	<solid x="30.0" y="21.0"/>
+	<solid x="31.0" y="21.0"/>
+	<solid x="12.0" y="9.0"/>
+	<solid x="11.0" y="9.0"/>
+	<solid x="8.0" y="12.0"/>
+	<solid x="8.0" y="13.0"/>
+	<solid x="8.0" y="14.0"/>
+	<solid x="8.0" y="15.0"/>
+	<solid x="7.0" y="15.0"/>
+	<solid x="6.0" y="15.0"/>
+	<solid x="5.0" y="15.0"/>
+	<solid x="5.0" y="16.0"/>
+	<solid x="6.0" y="16.0"/>
+	<solid x="7.0" y="16.0"/>
+	<solid x="7.0" y="17.0"/>
+	<solid x="7.0" y="18.0"/>
+	<solid x="32.0" y="21.0"/>
+	<solid x="33.0" y="21.0"/>
+	<solid x="34.0" y="21.0"/>
+	<solid x="32.0" y="22.0"/>
+	<solid x="28.0" y="22.0"/>
+	<solid x="23.0" y="22.0"/>
+	<solid x="19.0" y="22.0"/>
+	<solid x="13.0" y="22.0"/>
+	<solid x="10.0" y="22.0"/>
+	<solid x="5.0" y="22.0"/>
+	<solid x="3.0" y="21.0"/>
+	<solid x="2.0" y="21.0"/>
+	<solid x="17.0" y="18.0"/>
+	<solid x="17.0" y="17.0"/>
+	<solid x="17.0" y="16.0"/>
+	<solid x="17.0" y="15.0"/>
+	<solid x="17.0" y="14.0"/>
+	<solid x="17.0" y="13.0"/>
+	<solid x="17.0" y="12.0"/>
+	<solid x="17.0" y="11.0"/>
+	<solid x="17.0" y="10.0"/>
+	<solid x="13.0" y="5.0"/>
+	<solid x="13.0" y="4.0"/>
+	<solid x="13.0" y="3.0"/>
+	<solid x="13.0" y="2.0"/>
+	<solid x="10.0" y="2.0"/>
+	<solid x="10.0" y="10.0"/>
+	<solid x="9.0" y="11.0"/>
+	<solid x="9.0" y="10.0"/>
+	<solid x="8.0" y="11.0"/>
+	<solid x="10.0" y="9.0"/>
+	<solid x="20.0" y="0.0"/>
+	<solid x="21.0" y="0.0"/>
+	<solid x="22.0" y="0.0"/>
+	<solid x="22.0" y="0.0"/>
+	<solid x="22.0" y="0.0"/>
+	<solid x="26.0" y="12.0"/>
+	<solid x="25.0" y="12.0"/>
+	<solid x="24.0" y="12.0"/>
+	<solid x="23.0" y="12.0"/>
+	<solid x="22.0" y="12.0"/>
+	<solid x="21.0" y="12.0"/>
+	<solid x="20.0" y="12.0"/>
+	<solid x="19.0" y="12.0"/>
+	<solid x="18.0" y="12.0"/>
+	<solid x="26.0" y="14.0"/>
+	<solid x="26.0" y="13.0"/>
+	<solid x="31.0" y="17.0"/>
+	<solid x="31.0" y="16.0"/>
+	<solid x="31.0" y="15.0"/>
+	<solid x="31.0" y="14.0"/>
+	<solid x="31.0" y="13.0"/>
+	<solid x="32.0" y="12.0"/>
+	<solid x="33.0" y="12.0"/>
+	<solid x="33.0" y="12.0"/>
+	<solid x="34.0" y="13.0"/>
+	<solid x="34.0" y="14.0"/>
+	<solid x="34.0" y="15.0"/>
+	<solid x="34.0" y="16.0"/>
+	<solid x="34.0" y="17.0"/>
+	<solid x="34.0" y="18.0"/>
+	<solid x="34.0" y="19.0"/>
+	<solid x="34.0" y="20.0"/>
+	<solid x="23.0" y="0.0"/>
+	<solid x="24.0" y="0.0"/>
+	<solid x="25.0" y="0.0"/>
+	<solid x="26.0" y="0.0"/>
+	<solid x="27.0" y="0.0"/>
+	<solid x="28.0" y="0.0"/>
+	<solid x="30.0" y="0.0"/>
+	<solid x="29.0" y="0.0"/>
+	<solid x="31.0" y="0.0"/>
+	<solid x="34.0" y="0.0"/>
+	<solid x="33.0" y="0.0"/>
+	<solid x="32.0" y="0.0"/>
+	<solid x="34.0" y="1.0"/>
 	<leftSlope x="3.0" y="5.0"/>
-	<prop x="11.5" y="1.0" type="DOMINO"/>
-	<prop x="12.5" y="1.0" type="DOMINO"/>
-	<prop x="13.5" y="1.0" type="DOMINO"/>
-	<prop x="14.5" y="1.0" type="DOMINO"/>
-	<prop x="15.5" y="1.0" type="DOMINO"/>
-	<prop x="3.5" y="5.0" type="DOMINO"/>
-	<prop x="4.0" y="5.0" type="DOMINO"/>
-	<prop x="4.5" y="5.0" type="DOMINO"/>
-	<prop x="5.0" y="5.0" type="DOMINO"/>
-	<prop x="5.5" y="5.0" type="DOMINO"/>
-	<prop x="6.0" y="5.0" type="DOMINO"/>
-	<prop x="6.5" y="5.0" type="DOMINO"/>
 	<prop x="3.0" y="14.0" type="BALL"/>
+	<prop x="4.0" y="5.0" type="DOMINO"/>
+	<prop x="4.8" y="5.0" type="DOMINO"/>
+	<prop x="5.6000004" y="5.0" type="DOMINO"/>
+	<prop x="6.4000006" y="5.0" type="DOMINO"/>
 	<well id="56c80355-b205-4fc2-a8ae-7e9e994b08c4" minX="6.0" minY="1.0" maxX="10.0" maxY="3.0" affinity="WATER"/>
+	<well id="4408ae43-3d5e-4a34-acb4-8178a3e64862" minX="14.0" minY="1.0" maxX="16.0" maxY="2.0" affinity="MAGMA"/>
+	<well id="5cdaf904-9d43-4463-b377-2ef687676072" minX="18.0" minY="13.0" maxX="26.0" maxY="15.0" affinity="WATER"/>
 	<vat minX="14.0" minY="7.0" maxX="16.0" maxY="9.0" type="MAGMA"/>
+	<beam minX="16.0" minY="19.0" maxX="30.0" maxY="20.0" dir="RIGHT"/>
+	<platform height="9.0" x="16.0" y="10.0">
+		<wellActivationID>56c80355-b205-4fc2-a8ae-7e9e994b08c4</wellActivationID>
+	</platform>
 	<trapdoor x="3.0" y="12.0">
 		<wellActivationID>56c80355-b205-4fc2-a8ae-7e9e994b08c4</wellActivationID>
 	</trapdoor>
 	<trapdoor x="15.0" y="6.0">
-		<wellActivationID>56c80355-b205-4fc2-a8ae-7e9e994b08c4</wellActivationID>
+		<wellActivationID>5cdaf904-9d43-4463-b377-2ef687676072</wellActivationID>
 	</trapdoor>
 	<gear radius="3.1622777" rotatesRight="true" x="13.0" y="14.0">
 		<wellActivationID>56c80355-b205-4fc2-a8ae-7e9e994b08c4</wellActivationID>
 	</gear>
+	<spaceship x="21.0" y="1.0">
+		<wellActivationID>4408ae43-3d5e-4a34-acb4-8178a3e64862</wellActivationID>
+	</spaceship>
 </level>

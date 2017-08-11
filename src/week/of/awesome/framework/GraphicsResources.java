@@ -25,7 +25,7 @@ public class GraphicsResources implements Disposable {
 		Texture t = textureCache.get(path);
 		if (t == null) {
 			t = new Texture(path);
-			t.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+			t.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
 			textureCache.put(path, t);
 		}
 		return t;

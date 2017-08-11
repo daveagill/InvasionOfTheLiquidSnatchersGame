@@ -9,9 +9,9 @@ public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.title = "WoA5";
-		config.width = 800;
-		config.height = 600;
-		config.resizable = false;
+		config.width = 1024;
+		config.height = 768;
+		config.resizable = true;
 		
 		//config.addIcon("icon128.png", FileType.Internal);
 		//config.addIcon("icon32.png", FileType.Internal);
