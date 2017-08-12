@@ -76,8 +76,6 @@ public class RenderService implements Disposable {
 	}
 	
 	public void drawScreen(Texture t, boolean repeating, Color colour) {
-		Matrix4 prevMatToRestore = new Matrix4(batch.getTransformMatrix());
-		batch.setTransformMatrix(new Matrix4());
 		batch.setColor(colour);
 		if (repeating) {
 			batch.draw(t, 0, 0, 0, 0, width, height);
@@ -86,7 +84,6 @@ public class RenderService implements Disposable {
 			batch.draw(t, 0, 0, width, height);
 		}
 		batch.setColor(Color.WHITE);
-		batch.setTransformMatrix(prevMatToRestore);
 	}
 	
 	public void drawScreen(Texture t, boolean repeating, float alpha) {
@@ -141,7 +138,7 @@ public class RenderService implements Disposable {
 	
 	public GlyphLayout drawWrappedFont(BitmapFont font, String str, float x, float y, float width, float alpha) {
 		font.setColor(1, 1, 1, alpha);
-		return font.draw(batch, str, x, y, width/2f, Align.topLeft, true);
+		return font.draw(batch, str, x, y, width, Align.bottomLeft, true);
 	}
 	
 	public GlyphLayout drawCenteredFont(BitmapFont font, String str, float midX, float y, float alpha) {

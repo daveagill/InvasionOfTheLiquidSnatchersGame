@@ -1,4 +1,5 @@
 <level name="test">
+	<bgText x="18.0" y="11.0" text="Every Last Drop!"/>
 	<minion x="7.0" y="5.0"/>
 	<minion x="16.0" y="11.0"/>
 	<solid x="5.0" y="0.0"/>
@@ -174,6 +175,7 @@
 	<solid x="33.0" y="0.0"/>
 	<solid x="32.0" y="0.0"/>
 	<solid x="34.0" y="1.0"/>
+	<solid x="17.0" y="9.0"/>
 	<leftSlope x="3.0" y="5.0"/>
 	<prop x="3.0" y="14.0" type="BALL"/>
 	<prop x="4.0" y="5.0" type="DOMINO"/>

@@ -92,7 +92,7 @@ public class InputService {
 		});
 	}
 	
-	public void updatePostFrame() {
+	public void postUpdate() {
 		keysDown.addAll(keysJustDown);
 		IntSetIterator it = keysJustUp.iterator();
 		while (it.hasNext) {

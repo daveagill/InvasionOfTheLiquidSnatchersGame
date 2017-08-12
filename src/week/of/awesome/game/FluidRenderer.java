@@ -16,10 +16,11 @@ import week.of.awesome.framework.RenderService;
 
 public class FluidRenderer {
 
-	public static final Color BLOOD_COLOUR = Color.LIME;
+	public static final Color BLOOD_COLOUR = new Color(34f/255f, 174f/255f, 34f/255f, 1f);
+	public static final Color NUCLEAR_WASTE_COLOUR = new Color(34f/255f, 240f/255f, 34f/255f, 1f);
 	public static final Color WATER_COLOUR = new Color(50f/255f, 132f/255f, 255f/255f, 1f);
 	public static final Color MAGMA_COLOUR = Color.RED;
-	public static final Color OIL_COLOUR = Color.PURPLE;
+	public static final Color OIL_COLOUR = Color.BLACK;
 	
 	private RenderService gfx;
 	
@@ -34,7 +35,7 @@ public class FluidRenderer {
 	public FluidRenderer(RenderService gfx, GraphicsResources resources) {
 		this.gfx = gfx;
 		
-		this.frameBuffer = resources.newFrameBuffer(Pixmap.Format.RGBA8888, gfx.getWidth() /4, gfx.getHeight() /4);
+		this.frameBuffer = resources.newFrameBuffer(Pixmap.Format.RGBA8888, gfx.getWidth() / 4, gfx.getHeight());
 		this.particleTex = resources.newTexture("sprites/particle.png");
 		this.wellFillTex = resources.newTexture("tiles/wellfill.png");
 		this.wellFillSolidTex = resources.newTexture("tiles/wellfillSolid.png");
@@ -50,7 +51,7 @@ public class FluidRenderer {
 		
 		for (Droplet p : particles) {
 			c.set(typeToColour(p.getType()));
-			c.lerp(Color.WHITE, p.getFrothiness() * 0.2f + 0.05f);
+			c.lerp(Color.WHITE, p.getFrothiness() * typeToFrothFactor(p.getType()) + 0.05f);
 			c.a = p.getAlpha();
 			gfx.drawCenteredTinted(particleTex, p.getPosition(), 0.5f, 0.5f, false, c);
 		}
@@ -89,7 +90,19 @@ public class FluidRenderer {
 			case BLOOD: return BLOOD_COLOUR;
 			case MAGMA: return MAGMA_COLOUR;
 			case OIL:   return OIL_COLOUR;
+			case WASTE: return NUCLEAR_WASTE_COLOUR;
 		}
 		throw new RuntimeException("Unhandled droplet type: " + type);
+	}
+	
+	private static float typeToFrothFactor(Droplet.Type type) {
+		switch (type) {
+		case WATER: return 0.2f;
+		case BLOOD: return 0.2f;
+		case MAGMA: return 0.2f;
+		case OIL:   return 0.02f;
+		case WASTE: return 0.2f;
+	}
+	throw new RuntimeException("Unhandled droplet type: " + type);
 	}
 }

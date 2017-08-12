@@ -2,8 +2,7 @@ package week.of.awesome.game;
 
 import com.badlogic.gdx.math.Vector2;
 
-public class MinionSpec {
+public class BgTextSpec {
 	public Vector2 position;
-	public String dialog;
-	public Droplet.Type fluidType;
+	public String text;
 }

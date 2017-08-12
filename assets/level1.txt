@@ -1,0 +1,38 @@
+<level name="test">
+	<bgText x="4.0" y="2.0" text="FILL TO PLAY..."/>
+	<minion x="11.0" y="11.0" type="WASTE"/>
+	<solid x="3.0" y="0.0"/>
+	<solid x="10.0" y="0.0"/>
+	<solid x="3.0" y="2.0"/>
+	<solid x="0.0" y="2.0"/>
+	<solid x="1.0" y="2.0"/>
+	<solid x="1.0" y="2.0"/>
+	<solid x="2.0" y="2.0"/>
+	<solid x="10.0" y="1.0"/>
+	<solid x="10.0" y="1.0"/>
+	<solid x="10.0" y="2.0"/>
+	<solid x="9.0" y="0.0"/>
+	<solid x="4.0" y="0.0"/>
+	<solid x="0.0" y="3.0"/>
+	<solid x="0.0" y="4.0"/>
+	<solid x="0.0" y="5.0"/>
+	<solid x="0.0" y="6.0"/>
+	<solid x="0.0" y="7.0"/>
+	<solid x="11.0" y="2.0"/>
+	<solid x="12.0" y="2.0"/>
+	<solid x="13.0" y="2.0"/>
+	<solid x="3.0" y="1.0"/>
+	<solid x="13.0" y="3.0"/>
+	<solid x="13.0" y="4.0"/>
+	<solid x="13.0" y="5.0"/>
+	<solid x="13.0" y="6.0"/>
+	<solid x="13.0" y="7.0"/>
+	<solid x="5.0" y="4.0"/>
+	<solid x="8.0" y="4.0"/>
+	<solid x="11.0" y="5.0"/>
+	<solid x="2.0" y="5.0"/>
+	<well id="b83e72e1-eaba-4957-a7ee-772995cff1ae" minX="4.0" minY="0.0" maxX="10.0" maxY="3.0" affinity="WASTE"/>
+	<spaceship x="20.0" y="3.0">
+		<wellActivationID>b83e72e1-eaba-4957-a7ee-772995cff1ae</wellActivationID>
+	</spaceship>
+</level>

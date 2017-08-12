@@ -1,18 +1,24 @@
 package week.of.awesome.game;
 
+import java.util.Collection;
 import java.util.Random;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.Texture.TextureWrap;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
+
 import week.of.awesome.framework.GraphicsResources;
 import week.of.awesome.framework.RenderService;
 
 public class Renderer {
 	
-	private static final Color COLOUR_CAST = new Color(242f/255f, 214f/255f, 255f/255f, 1f);
+	private static final Color COLOUR_CAST = new Color(247f/255f, 170f/255f, 255f/255f, 1f);
 	private static final Color ALIEN_GREEN = new Color(0.5f, 1, 0.5f, 1);
 	
 	private Vector2 tmpPos = new Vector2();
@@ -46,6 +52,9 @@ public class Renderer {
 	private Texture bgTex;
 	private Texture vignetteTex;
 	
+	private BitmapFont bgTextFont;
+	private BitmapFont dialogTextFont;
+	
 	public Renderer(RenderService gfx, GraphicsResources resources) {
 		this.gfx = gfx;
 		this.fluidRenderer = new FluidRenderer(gfx, resources);
@@ -77,15 +86,29 @@ public class Renderer {
 		this.wellHighlightTex = resources.newTexture("tiles/wellHighlighter.png");
 		this.beamTex = resources.newTexture("tiles/beam.png");
 		this.beamBaseTex = resources.newTexture("tiles/beamBase.png");
+		
+		this.bgTextFont = resources.newFont("fonts/QUANTIFIER NBP.fnt");
+		this.dialogTextFont = resources.newFont("fonts/CASTWO1.fnt");
 	}
 	
 	public void preDraw(Scene scene) {
 		fluidRenderer.updateRendering(scene.getDroplets(), scene.getWells());
 	}
 	
-	public void draw(Scene scene) {
+	public void draw(Scene scene, Matrix4 worldTransform) {
+		gfx.setTransformMatrix(new Matrix4());
+		
 		gfx.drawScreen(bgTex, true, COLOUR_CAST);
+		for (BgTextSpec bgText : scene.getLevel().bgTexts) {
+			Vector3 textPos = new Vector3(bgText.position.x + 0.5f, bgText.position.y + 0.5f, 0).mul(worldTransform);
+			gfx.drawFont(bgTextFont, bgText.text, textPos.x, textPos.y, 0.8f);
+		}
+		
 		gfx.drawScreen(vignetteTex, false, 0.3f);
+		
+		
+		
+		gfx.setTransformMatrix(worldTransform);
 		
 		float wellHeightFudge = 0.3f;
 		float wellIndicatorThickness = 0.1f;
@@ -188,6 +211,28 @@ public class Renderer {
 		for (Spaceship s : scene.getSpaceships()) {
 			gfx.draw(spaceshipTex, s.getPosition(), 8f, 4f, 1f);
 		}
+		
+		
+		// MINION SPEECH
+		gfx.setTransformMatrix(new Matrix4());
+		for (Minion m : scene.getMinions()) {
+			Collection<String> dialogLines = m.getDialog();
+			if (dialogLines == null) { continue; }
+			
+			Vector2 pos = m.getPosition();
+			Vector3 textPos = new Vector3(pos.x + 0.5f, pos.y, 0).mul(worldTransform);
+			float lineOffsetY = 0;
+			float dialogOffsetY = dialogLines.size() * dialogTextFont.getLineHeight();
+			
+			for (String line : dialogLines) {
+				gfx.drawFont(dialogTextFont,line, textPos.x, textPos.y + dialogOffsetY - lineOffsetY, 1f);
+				lineOffsetY += dialogTextFont.getLineHeight();
+			}
+		}
+	}
+
+	public void drawDebugging(String text) {
+		gfx.drawFont(bgTextFont, text, 10,  gfx.getHeight() - 10, 1);
 	}
 
 }

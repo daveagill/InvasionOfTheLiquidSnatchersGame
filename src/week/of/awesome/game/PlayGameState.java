@@ -3,18 +3,18 @@ package week.of.awesome.game;
 import java.util.Arrays;
 import java.util.List;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
-
 import week.of.awesome.framework.FlipFlopTweener;
 import week.of.awesome.framework.GameState;
 import week.of.awesome.framework.MouseWatcher;
 import week.of.awesome.framework.Services;
 import week.of.awesome.game.brushes.BeamBrush;
+import week.of.awesome.game.brushes.BgTextBrush;
 import week.of.awesome.game.brushes.Brush;
 import week.of.awesome.game.brushes.DominosBrush;
 import week.of.awesome.game.brushes.GearBrush;
@@ -23,6 +23,7 @@ import week.of.awesome.game.brushes.PlatformBrush;
 import week.of.awesome.game.brushes.MinionBrush;
 import week.of.awesome.game.brushes.PropBrush;
 import week.of.awesome.game.brushes.RightSlopeBrush;
+import week.of.awesome.game.brushes.ShiftBrush;
 import week.of.awesome.game.brushes.SolidBrush;
 import week.of.awesome.game.brushes.SpaceshipBrush;
 import week.of.awesome.game.brushes.TrapDoorBrush;
@@ -32,9 +33,12 @@ import week.of.awesome.game.brushes.WiringBrush;
 
 public class PlayGameState implements GameState {
 	
+	private static final float FADE_SPEED = 1f;
+	
 	private Services services;
 	private Renderer renderer;
 	
+	private int levelNum=1;
 	private Level level;
 	private Scene scene;
 	private Rectangle levelSize;
@@ -50,13 +54,18 @@ public class PlayGameState implements GameState {
 	private MouseWatcher inGameMouseWatcher;
 	private MouseWatcher buildModeMouseWatcher;
 	private List<Brush> brushes = Arrays.asList(
+			new ShiftBrush(),
 			new SolidBrush(),
 			new LeftSlopeBrush(),
 			new RightSlopeBrush(),
 			new WiringBrush(),
 			new WellBrush(Droplet.Type.WATER),
 			new WellBrush(Droplet.Type.MAGMA),
+			new WellBrush(Droplet.Type.OIL),
+			new VatBrush(Droplet.Type.WATER),
 			new VatBrush(Droplet.Type.MAGMA),
+			new VatBrush(Droplet.Type.OIL),
+			new VatBrush(Droplet.Type.BLOOD),
 			new PlatformBrush(),
 			new TrapDoorBrush(),
 			new BeamBrush(),
@@ -64,7 +73,10 @@ public class PlayGameState implements GameState {
 			new DominosBrush(),
 			new GearBrush(),
 			new SpaceshipBrush(),
-			new MinionBrush()
+			new MinionBrush(Droplet.Type.WATER),
+			new MinionBrush(Droplet.Type.OIL),
+			new MinionBrush(Droplet.Type.WASTE),
+			new BgTextBrush()
 	);
 	private int currentBrushIdx = 0;
 	
@@ -85,6 +97,11 @@ public class PlayGameState implements GameState {
 		public void gameOver() {
 			//isEnding = true;
 		}
+
+		@Override
+		public void levelCompleted() {
+			advanceLevel();
+		}
 		
 	};
 
@@ -95,9 +112,7 @@ public class PlayGameState implements GameState {
 		
 		this.screenDarkFadeTex = services.gfxResources.newTexture("screens/darkFade.png");
 		
-		level = Level.load("test.txt");
-		this.scene = new Scene(worldEvents, level, services.physics);
-		this.levelSize = level.calculateSize();
+		reloadScene();
 		
 		this.inGameMouseWatcher = new MouseWatcher() {
 			@Override
@@ -112,8 +127,8 @@ public class PlayGameState implements GameState {
 			
 			@Override
 			public void movedOrDragged(int screenX, int screenY) {
-				float worldX = screenX / scaleX;
-				float worldY = screenY / scaleY;
+				float worldX = screenX / scaleX + levelSize.x;
+				float worldY = screenY / scaleY + levelSize.y;
 				scene.aim(worldX, worldY);
 			}
 		};
@@ -187,8 +202,12 @@ public class PlayGameState implements GameState {
 		// toggle the mouse control scheme on space key
 		if (services.input.isJustDown(Keys.SPACE)) {
 			buildModeEnabled = !buildModeEnabled;
+			
+			this.scene.dispose();
+			this.scene = new Scene(worldEvents, level, services.physics);
+			this.levelSize = level.calculateSize();
+			
 			if (buildModeEnabled) {
-				reloadScene();
 				services.physics.pause(true);
 				services.input.removeMouseWatcher(inGameMouseWatcher);
 				services.input.addMouseWatcher(buildModeMouseWatcher);
@@ -201,17 +220,25 @@ public class PlayGameState implements GameState {
 		}
 		
 		// cycle brushes
-		if (services.input.isJustDown(Keys.BACKSLASH)) {
-			currentBrushIdx = (currentBrushIdx + 1) % brushes.size();
-			System.out.println(brushes.get(currentBrushIdx).getName());
+		if (services.input.isJustDown(Keys.X)) {
+			++currentBrushIdx;
+			currentBrushIdx = currentBrushIdx % brushes.size();
+		}
+		else if (services.input.isJustDown(Keys.Z)) {
+			--currentBrushIdx;
+			currentBrushIdx = currentBrushIdx < 0 ? brushes.size()-1 : currentBrushIdx;
 		}
 		
 		if (services.input.isJustDown(Keys.S)) {
-			Level.save(level, "test.txt");
+			Level.save(level, "level" + levelNum + ".txt");
 		}
 		
 		if (services.input.isJustDown(Keys.R)) {
-			reloadScene();
+			isEnding = true;
+		}
+		
+		if (services.input.isJustDown(Keys.TAB)) {
+			advanceLevel();
 		}
 		
 		if (!buildModeEnabled) {
@@ -220,11 +247,14 @@ public class PlayGameState implements GameState {
 		
 		// screen fade in/out
 		if (isEnding || isStarting) {
-			if (screenFader.updateTillEdgeChange(dt * 4f)) {
-				isStarting = false;
-				if (isEnding) {
+			if (screenFader.updateTillEdgeChange(dt * FADE_SPEED)) {
+				if (isStarting) {
+					isStarting = false;
+				}
+				else if (isEnding) {
 					isEnding = false;
 					reloadScene();
+					isStarting = true;
 				}
 			}
 		}
@@ -235,17 +265,27 @@ public class PlayGameState implements GameState {
 	@Override
 	public void render(float dt) {
 		if (!buildModeEnabled) {
-			int scaleXY = (int) (Math.min(services.gfx.getWidth() / levelSize.width, services.gfx.getHeight() / levelSize.height) - 1);
+			int scaleXY = (int) Math.min(services.gfx.getWidth() / (levelSize.x + levelSize.width), services.gfx.getHeight() / (levelSize.y + levelSize.height));
 			scaleX = scaleXY;
 			scaleY = scaleXY;
 		}
-		services.gfx.setTransformMatrix(new Matrix4().scale(scaleX, scaleY, 1f).translate(-levelSize.x, -levelSize.y, 0));
+		Matrix4 worldTransform = new Matrix4().scale(scaleX, scaleY, 1f);
 		
+		if (!buildModeEnabled) {
+			worldTransform.translate(-levelSize.x/2f, -levelSize.y/2f, 0);
+		}
+		
+		services.gfx.setTransformMatrix(worldTransform);
 		renderer.preDraw(scene);
 		
 		services.gfx.beginFrame();
-		renderer.draw(scene);
 		
+		renderer.draw(scene, worldTransform);
+
+		if (buildModeEnabled) {
+			services.gfx.setTransformMatrix(new Matrix4());
+			renderer.drawDebugging(brushes.get(currentBrushIdx).getName());
+		}
 		
 		// screen fade in/out
 		if (isStarting || isEnding) {
@@ -256,9 +296,22 @@ public class PlayGameState implements GameState {
 	}
 	
 	private void reloadScene() {
-		scene.dispose();
-		level = Level.load("test.txt");
+		if (scene != null) {
+			scene.dispose();
+		}
+		this.level = Level.load("level" + levelNum + ".txt");
+		this.levelSize = level.calculateSize();
 		this.scene = new Scene(worldEvents, level, services.physics);
-		isStarting = true;
+	}
+	
+	private void advanceLevel() {
+		++levelNum;
+		
+		// wrap around the end
+		if (!Gdx.files.internal("level" + levelNum + ".txt").exists()) {
+			levelNum = 1;
+		}
+		
+		isEnding = true;
 	}
 }

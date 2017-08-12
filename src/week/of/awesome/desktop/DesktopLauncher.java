@@ -11,7 +11,7 @@ public class DesktopLauncher {
 		config.title = "WoA5";
 		config.width = 1024;
 		config.height = 768;
-		config.resizable = true;
+		config.resizable = false;
 		
 		//config.addIcon("icon128.png", FileType.Internal);
 		//config.addIcon("icon32.png", FileType.Internal);

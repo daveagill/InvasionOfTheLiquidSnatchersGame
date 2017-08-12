@@ -21,7 +21,7 @@ public class Well {
 	public Droplet.Type getDropletAffinity() { return spec.affinity; }
 	public Vector2 getMinPosition() { return spec.min; }
 	public Vector2 getMaxPosition() { return spec.max; }
-	public float getPercentFull() { return ((float)amountFull) / capacity; }
+	public float getPercentFull() { return ((float)amountFull) / (float)capacity; }
 	
 	public void notifyCapturedDroplets(int amount) {
 		boolean alreadyTriggered = amountFull == capacity;

@@ -52,7 +52,7 @@ public class StandardGameApp implements ApplicationListener {
 		float frameSimulationTime = 0;
 		int numIterations = 0;
 		
-		while (accumulatedTime >= FIXED_TIMESTEP_NANOS && numIterations < 2) {
+		if (accumulatedTime >= FIXED_TIMESTEP_NANOS) {
 			++numIterations;
 			services.physics.update(FIXED_TIMESTEP);
 			GameState nextState = currentState.update(FIXED_TIMESTEP);
@@ -67,11 +67,11 @@ public class StandardGameApp implements ApplicationListener {
 			
 			accumulatedTime -= FIXED_TIMESTEP_NANOS;
 			frameSimulationTime += FIXED_TIMESTEP;
+			services.input.postUpdate();
 		}
 		
 		services.jukebox.update(frameSimulationTime);
 		currentState.render(frameSimulationTime);
-		services.input.updatePostFrame();
 	}
 	
 

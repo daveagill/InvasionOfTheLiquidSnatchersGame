@@ -13,6 +13,7 @@ import com.badlogic.gdx.utils.XmlReader.Element;
 import com.badlogic.gdx.utils.XmlWriter;
 
 public class Level {
+	public Collection<BgTextSpec> bgTexts = new ArrayList<>();
 	public Collection<MinionSpec> minions = new ArrayList<>();
 	public Collection<Vector2> solids = new ArrayList<>();
 	public Collection<Vector2> leftSlopes = new ArrayList<>();
@@ -29,6 +30,7 @@ public class Level {
 	public Collection<SpaceshipSpec> spaceships = new ArrayList<>();
 	
 	public void removeAt(int x, int y) {
+		bgTexts.removeIf(t -> t.position.x == x && t.position.y == y);
 		minions.removeIf(m -> m.position.x == x && m.position.y == y);
 		solids.remove(new Vector2(x, y));
 		leftSlopes.remove(new Vector2(x, y));
@@ -41,6 +43,38 @@ public class Level {
 		trapdoors.removeIf(p -> p.position.x == x && p.position.y == y);
 		gears.removeIf(g -> Vector2.dst2(x, y, g.position.x, g.position.y) < g.radius*g.radius);
 		spaceships.removeIf(s -> s.position.x == x && s.position.y == y);
+	}
+	
+	public void shiftX(int fromX, int dx) {
+		bgTexts.stream().filter(t -> t.position.x > fromX).forEach(t -> { t.position.x += dx; });
+		minions.stream().filter(t -> t.position.x > fromX).forEach(m -> { m.position.x += dx; });
+		solids.stream().filter(t -> t.x > fromX).forEach(s -> {s.x += dx; });
+		leftSlopes.stream().filter(t -> t.x > fromX).forEach(s -> {s.x += dx; });
+		rightSlopes.stream().filter(t -> t.x > fromX).forEach(s -> {s.x += dx; });
+		props.stream().filter(t -> t.position.x > fromX).forEach(p -> { p.position.x += dx; });
+		wells.stream().filter(t -> t.min.x > fromX).forEach(w -> { w.min.x += dx; w.max.x += dx; });
+		vats.stream().filter(t -> t.min.x > fromX).forEach(v -> { v.min.x += dx; v.max.x += dx; });
+		beams.stream().filter(t -> t.min.x > fromX).forEach(b -> { b.min.x += dx; b.max.x += dx; });
+		platforms.stream().filter(t -> t.position.x > fromX).forEach(p -> { p.position.x += dx; });
+		trapdoors.stream().filter(t -> t.position.x > fromX).forEach(p -> { p.position.x += dx; });
+		gears.stream().filter(t -> t.position.x > fromX).forEach(g -> { g.position.x += dx; });
+		spaceships.stream().filter(t -> t.position.x > fromX).forEach(s -> { s.position.x += dx; });
+	}
+	
+	public void shiftY(int fromY, int dy) {
+		bgTexts.stream().filter(t -> t.position.y > fromY).forEach(t -> { t.position.y += dy; });
+		minions.stream().filter(t -> t.position.y > fromY).forEach(m -> { m.position.y += dy; });
+		solids.stream().filter(t -> t.y > fromY).forEach(s -> {s.y += dy; });
+		leftSlopes.stream().filter(t -> t.y > fromY).forEach(s -> {s.y += dy; });
+		rightSlopes.stream().filter(t -> t.y > fromY).forEach(s -> {s.y += dy; });
+		props.stream().filter(t -> t.position.y > fromY).forEach(p -> { p.position.y += dy; });
+		wells.stream().filter(t -> t.min.y > fromY).forEach(w -> { w.min.y += dy; w.max.y += dy; });
+		vats.stream().filter(t -> t.min.y > fromY).forEach(v -> { v.min.y += dy; v.max.y += dy; });
+		beams.stream().filter(t -> t.min.y > fromY).forEach(b -> { b.min.y += dy; b.max.y += dy; });
+		platforms.stream().filter(t -> t.position.y > fromY).forEach(p -> { p.position.y += dy; });
+		trapdoors.stream().filter(t -> t.position.y > fromY).forEach(p -> { p.position.y += dy; });
+		gears.stream().filter(t -> t.position.y > fromY).forEach(g -> { g.position.y += dy; });
+		spaceships.stream().filter(t -> t.position.y > fromY).forEach(s -> { s.position.y += dy; });
 	}
 	
 	public WellSpec getWell(int x, int y) {
@@ -81,7 +115,7 @@ public class Level {
 			maxY = Math.max(maxY, p.y);
 		}
 		
-		return new Rectangle(minX, minY, maxX - minX, maxY - minY);
+		return new Rectangle(minX, minY, maxX - minX + 1, maxY - minY + 1);
 	}
 	
 	public static void save(Level level, String filename) {
@@ -90,10 +124,23 @@ public class Level {
 			
 			XmlWriter xml = xmlWriter.element("level").attribute("name", "test");
 			
-			for (MinionSpec minion : level.minions) {
-				xml.element("minion")
-					.attribute("x", minion.position.x).attribute("y", minion.position.y)
+			for (BgTextSpec bgText : level.bgTexts) {
+				xml.element("bgText")
+					.attribute("x", bgText.position.x).attribute("y", bgText.position.y)
+					.attribute("text", bgText.text)
 					.pop();
+			}
+			
+			for (MinionSpec minion : level.minions) {
+				XmlWriter minionWriter = xml.element("minion")
+					.attribute("x", minion.position.x).attribute("y", minion.position.y);
+				if (minion.dialog != null) {
+					minionWriter.attribute("dialog", minion.dialog);
+				}
+				if (minion.fluidType != null) {
+					minionWriter.attribute("type", minion.fluidType);
+				}
+				minionWriter.pop();
 			}
 			
 			for (Vector2 pos : level.solids) {
@@ -179,16 +226,26 @@ public class Level {
 	public static Level load(String filename) {
 		Element xml = null;
 		try {
-			xml = new XmlReader().parse(Gdx.files.local(filename));
+			xml = new XmlReader().parse(Gdx.files.internal(filename));
 		} catch (IOException ioe) {
 			throw new RuntimeException(ioe);
 		}
 		
 		Level level = new Level();
 		
+		for (Element bgTextXml : xml.getChildrenByName("bgText")) {
+			BgTextSpec bgText = new BgTextSpec();
+			bgText.position = new Vector2(bgTextXml.getFloatAttribute("x"), bgTextXml.getFloatAttribute("y"));
+			bgText.text = bgTextXml.getAttribute("text");
+			level.bgTexts.add(bgText);
+		}
+		
 		for (Element minionXml : xml.getChildrenByName("minion")) {
 			MinionSpec minion = new MinionSpec();
 			minion.position = new Vector2(minionXml.getFloatAttribute("x"), minionXml.getFloatAttribute("y"));
+			minion.dialog = minionXml.getAttribute("dialog", null);
+			String fluidType = minionXml.getAttribute("type", null);
+			minion.fluidType = fluidType == null ? null : Droplet.Type.valueOf(fluidType);
 			level.minions.add(minion);
 		}
 		

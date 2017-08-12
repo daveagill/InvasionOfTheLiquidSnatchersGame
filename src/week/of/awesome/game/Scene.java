@@ -16,9 +16,9 @@ import week.of.awesome.framework.PhysicsService;
 import week.of.awesome.game.PhysicsFactory.BodySet;
 
 public class Scene implements Disposable {
-	private static final float MINION_AIM_RANGE = 3.5f;
 	private static final float SPRAY_SPEED = 10f;
 	
+	private Level level;
 	private WorldEvents events;
 	
 	private Collection<Body> persistentBodies = new ArrayList<>();
@@ -46,8 +46,11 @@ public class Scene implements Disposable {
 	
 	private Vector2 aimPos = new Vector2();
 	
+	private boolean levelComplete = false;
+	
 	
 	public Scene(WorldEvents events, Level level, PhysicsService physicsService) {
+		this.level = level;
 		this.events = events;
 		this.physics = new PhysicsFactory(physicsService);
 		this.fluid = new FluidSystem(physics);
@@ -157,6 +160,10 @@ public class Scene implements Disposable {
 		}
 	}
 	
+	public Level getLevel() {
+		return level;
+	}
+	
 	public Collection<Minion> getMinions() {
 		return minions;
 	}
@@ -221,9 +228,13 @@ public class Scene implements Disposable {
 		if (!isSpraying) {
 			// find the nearest minion within range
 			Minion nearestMinion = null;
+			float closestDistSquared = Float.POSITIVE_INFINITY;
 			for (Minion m : minions) {
-				if (!m.isDead() && Vector2.dst2(x, y, m.getPosition().x, m.getPosition().y) < MINION_AIM_RANGE*MINION_AIM_RANGE) {
+				if (m.isDead() || !m.isInteractive()) { continue; }
+				float distanceToMinionSquared = Vector2.dst2(x, y, m.getPosition().x, m.getPosition().y);
+				if (distanceToMinionSquared < closestDistSquared) {
 					nearestMinion = m;
+					closestDistSquared = distanceToMinionSquared;
 				}
 			}
 			
@@ -281,10 +292,15 @@ public class Scene implements Disposable {
 	public void update(float dt) {
 		contactListener.dispatchCollisionEvents();
 		
+		boolean isPerformingDialogYet = false;
 		Iterator<Minion> minionIter = minions.iterator();
 		while (minionIter.hasNext()) {
 			Minion m = minionIter.next();
 			m.update(dt);
+			
+			if (!isPerformingDialogYet) {
+				isPerformingDialogYet = m.updateDialog(dt);
+			}
 			
 			if (m.deathSceneComplete()) {
 				minionIter.remove();
@@ -298,12 +314,16 @@ public class Scene implements Disposable {
 			}
 		}
 		
+		if (isPerformingDialogYet) {
+			activeMinion = null;
+		}
+		
 		if (minions.isEmpty()) {
 			events.gameOver();
 		}
 		
 		if (isSpraying && activeMinion != null) {
-			fluid.spawnParticle(Droplet.Type.WATER, sprayDirection.cpy().scl(0.5f).add(activeMinion.getPosition()), sprayDirection.cpy().scl(SPRAY_SPEED), false);
+			fluid.spawnParticle(activeMinion.getDropletType(), activeMinion.getPosition().cpy().add(0, 0.2f).add(sprayDirection.cpy().scl(0.3f)), sprayDirection.cpy().scl(SPRAY_SPEED), false);
 		}
 				
 		fluid.update(dt);
@@ -316,10 +336,16 @@ public class Scene implements Disposable {
 			g.update(dt);
 		}
 		
+		int numSpaceshipsFlownAway = 0;
 		for (Spaceship s : spaceships) {
 			s.update(dt);
+			if (s.hasFlownOff()) { ++numSpaceshipsFlownAway; }
 		}
 		
+		if (numSpaceshipsFlownAway == spaceships.size() && !levelComplete && !spaceships.isEmpty()) {
+			levelComplete = true;
+			events.levelCompleted();
+		}
 		
 		// kill props falling to infinity
 		Iterator<Prop> propIter = props.iterator();
@@ -347,7 +373,10 @@ public class Scene implements Disposable {
 	private void wireToWells(Activatable a, ActivatableSpec spec) {
 		for (String wellID : spec.wellActivatorIDs) {
 			Well well = wellsByID.get(wellID);
-			if (well == null) { throw new RuntimeException(spec.getClass().getSimpleName() + " at " + spec.position + " has lost connection to well " + wellID); }
+			if (well == null) {
+				System.err.println(spec.getClass().getSimpleName() + " at " + spec.position + " has lost connection to well " + wellID);
+				continue;
+			}
 			well.registerActivatable(a);
 		}
 	}

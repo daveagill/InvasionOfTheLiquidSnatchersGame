@@ -9,7 +9,7 @@ public class Droplet {
 	private static final float SLOW_DECAY_SPEED = 0.3f;
 	private static final float FAST_DECAY_SPEED = 4f;
 	
-	public static enum Type { WATER, BLOOD, MAGMA, OIL }
+	public static enum Type { WATER, BLOOD, MAGMA, OIL, WASTE }
 	
 	private Body body;
 	private float life;

@@ -26,6 +26,10 @@ public class Spaceship implements Activatable {
 	public void activate() {
 		activated = true;
 	}
+	
+	public boolean hasFlownOff() {
+		return yOffset >= 15;
+	}
 
 	
 	public void update(float dt) {

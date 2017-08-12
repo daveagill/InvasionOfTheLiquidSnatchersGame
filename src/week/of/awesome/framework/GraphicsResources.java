@@ -43,7 +43,7 @@ public class GraphicsResources implements Disposable {
 	public ShaderProgram newShader(String path) {
 		ShaderProgram s = shaderCache.get(path);
 		if (s == null) {
-			s = new ShaderProgram(Gdx.files.internal("default.vert"), Gdx.files.internal(path + ".frag"));
+			s = new ShaderProgram(Gdx.files.internal("shaders/default.vert"), Gdx.files.internal("shaders/" + path + ".frag"));
 			
 			if (!s.isCompiled()) {
 				throw new RuntimeException("Failed to compile shader '" + path + "': " + s.getLog());
