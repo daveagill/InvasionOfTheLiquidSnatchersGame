@@ -7,17 +7,18 @@ import week.of.awesome.game.Level;
 
 public class GearBrush implements Brush {
 	
-	private int gearX, gearY;
+	private float gearX, gearY;
 
 	@Override
-	public void beginBrush(Level level, int x, int y) {
-		this.gearX = x;
-		this.gearY = y;
+	public void beginBrush(Level level, int x, int y, float worldX, float worldY) {
+		this.gearX = worldX;
+		this.gearY = worldY;
 	}
 
 	@Override
-	public void endBrush(Level level, int x, int y) {
-		float radius = Vector2.dst(gearX, gearY, x, y);
+	public void endBrush(Level level, int x, int y, float worldX, float worldY) {
+		float radius = Vector2.dst(gearX, gearY, worldX, worldY);
+		if (radius == 0) { return; }
 		
 		GearSpec spec = new GearSpec();
 		spec.position = new Vector2(gearX, gearY);
@@ -25,6 +26,7 @@ public class GearBrush implements Brush {
 		spec.rotatesRight = true;
 		
 		level.gears.add(spec);
+		level.undoHistory.add(spec);
 	}
 
 }

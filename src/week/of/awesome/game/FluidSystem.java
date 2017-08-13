@@ -3,6 +3,7 @@ package week.of.awesome.game;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.Disposable;
@@ -44,8 +45,16 @@ public class FluidSystem implements Disposable {
 	public void spawnParticle(Droplet.Type type, Vector2 position, Vector2 velocity, boolean persistent) {
 		if (!persistent && fluid.size() > 2000) { return; }
 		
+		Color colour = type.COLOUR;
+		// special case magma to include some blackened particles, it looks cool!
+		if (type == Droplet.Type.MAGMA) {
+			if (fluid.size() % 3 == 0) {
+				colour = colour.cpy().mul(0.5f, 0.1f, 0.1f, 1f);
+			}
+		}
+		
 		Body b = physics.createWaterParticle(position, velocity);
-		Droplet d = new Droplet(b, type, persistent);
+		Droplet d = new Droplet(b, type, colour, persistent);
 		fluid.add(d);
 		b.setUserData(d);
 	}

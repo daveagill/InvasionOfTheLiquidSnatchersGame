@@ -14,14 +14,15 @@ public class PropBrush implements Brush {
 	}
 	
 	@Override
-	public void beginBrush(Level level, int x, int y) { }
+	public void beginBrush(Level level, int x, int y, float worldX, float worldY) { }
 
 	@Override
-	public void endBrush(Level level, int x, int y) {
+	public void endBrush(Level level, int x, int y, float worldX, float worldY) {
 		PropSpec spec = new PropSpec();
 		spec.position = new Vector2(x, y);
 		spec.type = this.type;
 		level.props.add(spec);
+		level.undoHistory.add(spec);
 	}
 
 }

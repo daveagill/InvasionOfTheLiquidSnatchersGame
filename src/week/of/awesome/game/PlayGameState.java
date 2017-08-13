@@ -1,11 +1,14 @@
 package week.of.awesome.game;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Rectangle;
@@ -16,6 +19,7 @@ import week.of.awesome.framework.Services;
 import week.of.awesome.game.brushes.BeamBrush;
 import week.of.awesome.game.brushes.BgTextBrush;
 import week.of.awesome.game.brushes.Brush;
+import week.of.awesome.game.brushes.DecalBrush;
 import week.of.awesome.game.brushes.DominosBrush;
 import week.of.awesome.game.brushes.GearBrush;
 import week.of.awesome.game.brushes.LeftSlopeBrush;
@@ -38,10 +42,28 @@ public class PlayGameState implements GameState {
 	private Services services;
 	private Renderer renderer;
 	
-	private int levelNum=1;
+	private List<Sound> dropletSpraySounds = new ArrayList<>();
+	private List<Sound> dropletCaughtSounds = new ArrayList<>();
+	private float sprayDropletPlayDelay;
+	private float caughtDropletPlayDelay;
+	private int lastDropletSprayIdx;
+	private int lastDropletCaughtIdx;
+	private Random r = new Random(2);
+	
+	private Sound minionSpeakSound;
+	private Sound minionLandingSound;
+	private Sound propLandingSound;
+	private Sound spaceshipSound;
+	private Sound trapdoorSound;
+	private Sound platformSound;
+	private Sound beamSound;
+	private Sound gearsSound;
+	private Sound minionSplatSound;
+	
+	
+	private int levelNum=6;
 	private Level level;
 	private Scene scene;
-	private Rectangle levelSize;
 	
 	private float scaleX = 30;
 	private float scaleY = 30;
@@ -76,39 +98,123 @@ public class PlayGameState implements GameState {
 			new MinionBrush(Droplet.Type.WATER),
 			new MinionBrush(Droplet.Type.OIL),
 			new MinionBrush(Droplet.Type.WASTE),
-			new BgTextBrush()
+			new BgTextBrush(),
+			new DecalBrush()
 	);
 	private int currentBrushIdx = 0;
 	
 	private WorldEvents worldEvents = new WorldEvents() {
-
+		
+		@Override
+		public void sprayDroplet() {
+			if (sprayDropletPlayDelay <= 0) {
+				int idx = 0;
+				do {
+					idx = r.nextInt(dropletSpraySounds.size());
+				} while (idx == lastDropletSprayIdx);
+				dropletSpraySounds.get(idx).play(0.5f);
+				sprayDropletPlayDelay = 0.4f;
+				lastDropletSprayIdx = idx;
+			}
+		}
+		
 		@Override
 		public void captureDroplet(Droplet droplet, Well well) {
-			
+			if (caughtDropletPlayDelay <= 0) {
+				int idx = 0;
+				do {
+					idx = r.nextInt(dropletCaughtSounds.size());
+				} while (idx == lastDropletCaughtIdx);
+				dropletCaughtSounds.get(idx).play(0.5f);
+				caughtDropletPlayDelay = 0.6f;
+				lastDropletCaughtIdx = idx;
+			}
+		}
+		
+		@Override
+		public void minionSpeak() {
+			minionSpeakSound.play();
 		}
 
 		@Override
 		public void minionDeath(Minion minion) {
-			// TODO Auto-generated method stub
-			
+			minionSplatSound.play();
+		}
+		
+		@Override
+		public void minionLanding() {
+			minionLandingSound.play();
+		}
+		
+		public void propLanding() {
+			propLandingSound.play(0.3f);
+		}
+		
+		@Override
+		public void spaceshipActivated(boolean silent) {
+			if (!silent) {
+				spaceshipSound.play();
+			}
 		}
 
 		@Override
+		public void gearActivated() {
+			gearsSound.loop(0.05f);
+		}
+
+		@Override
+		public void platformActivated() {
+			platformSound.play();
+		}
+
+		@Override
+		public void trapdoorActivated() {
+			trapdoorSound.play();
+		}
+		
+		@Override
+		public void beamActivated() {
+			beamSound.play();
+		}
+
+
+		@Override
 		public void gameOver() {
-			//isEnding = true;
+			isEnding = true;
 		}
 
 		@Override
 		public void levelCompleted() {
 			advanceLevel();
 		}
-		
 	};
 
 	@Override
 	public void onEnter(Services services) {
 		this.services = services;
 		this.renderer = new Renderer(services.gfx, services.gfxResources);
+		
+		
+		dropletSpraySounds.add( services.sfxResources.newSound("sounds/spraydroplet1.wav") );
+		dropletSpraySounds.add( services.sfxResources.newSound("sounds/spraydroplet2.wav") );
+		dropletSpraySounds.add( services.sfxResources.newSound("sounds/spraydroplet3.wav") );
+		dropletSpraySounds.add( services.sfxResources.newSound("sounds/spraydroplet4.wav") );
+		
+		dropletCaughtSounds.add( services.sfxResources.newSound("sounds/catchdroplet1.wav") );
+		dropletCaughtSounds.add( services.sfxResources.newSound("sounds/catchdroplet2.wav") );
+		dropletCaughtSounds.add( services.sfxResources.newSound("sounds/catchdroplet3.wav") );
+		
+		minionSpeakSound = services.sfxResources.newSound("sounds/talking.wav");
+		minionLandingSound = services.sfxResources.newSound("sounds/land.wav");
+		minionSplatSound = services.sfxResources.newSound("sounds/splat.wav");
+		
+		propLandingSound = services.sfxResources.newSound("sounds/landProp.wav");
+		spaceshipSound = services.sfxResources.newSound("sounds/takeoff.wav");
+		trapdoorSound = services.sfxResources.newSound("sounds/unlock.wav");
+		platformSound = services.sfxResources.newSound("sounds/platform2.wav");
+		beamSound = services.sfxResources.newSound("sounds/beam.wav");
+		gearsSound = services.sfxResources.newSound("sounds/gear.wav");
+		
 		
 		this.screenDarkFadeTex = services.gfxResources.newTexture("screens/darkFade.png");
 		
@@ -127,9 +233,10 @@ public class PlayGameState implements GameState {
 			
 			@Override
 			public void movedOrDragged(int screenX, int screenY) {
-				float worldX = screenX / scaleX + levelSize.x;
-				float worldY = screenY / scaleY + levelSize.y;
+				float worldX = screenX / scaleX + scene.getLevelSize().x;
+				float worldY = screenY / scaleY + scene.getLevelSize().y;
 				scene.aim(worldX, worldY);
+				renderer.setMouse(screenX,  screenY);
 			}
 		};
 		
@@ -140,20 +247,24 @@ public class PlayGameState implements GameState {
 			
 			@Override
 			public void buttonDown(int screenX, int screenY, int button) {
-				initialMapX = (int) (screenX / scaleX);
-				initialMapY = (int) (screenY / scaleY);
+				float worldX = screenX / scaleX;
+				float worldY = screenY / scaleY;
+				initialMapX = (int) worldX;
+				initialMapY = (int) worldY;
 				if (button == Buttons.LEFT) {
-					brushes.get(currentBrushIdx).beginBrush(level, initialMapX, initialMapY);
+					brushes.get(currentBrushIdx).beginBrush(level, initialMapX, initialMapY, worldX, worldY);
 				}
 			}
 
 			@Override
 			public void buttonUp(int screenX, int screenY, int button) {
-				int mapX = (int) (screenX / scaleX);
-				int mapY = (int) (screenY / scaleY);
+				float worldX = screenX / scaleX;
+				float worldY = screenY / scaleY;
+				int mapX = (int) worldX;
+				int mapY = (int) worldY;
 				
 				if (button == Buttons.LEFT) {
-					brushes.get(currentBrushIdx).endBrush(level, mapX, mapY);
+					brushes.get(currentBrushIdx).endBrush(level, mapX, mapY, worldX, worldY);
 				} else { // delete stuff in range
 					int minX = Math.min(initialMapX, mapX);
 					int maxX = Math.max(initialMapX, mapX);
@@ -184,6 +295,11 @@ public class PlayGameState implements GameState {
 				scaleX -= amount;
 				scaleY -= amount;
 			}
+			
+			@Override
+			public void movedOrDragged(int screenX, int screenY) {
+				renderer.setMouse(screenX,  screenY);
+			}
 		};
 		
 		services.input.addMouseWatcher(inGameMouseWatcher);
@@ -198,16 +314,19 @@ public class PlayGameState implements GameState {
 	}
 
 	@Override
-	public GameState update(float dt) {		
+	public GameState update(float dt) {
+		if (caughtDropletPlayDelay > 0) { caughtDropletPlayDelay -= dt; }
+		if (sprayDropletPlayDelay > 0) { sprayDropletPlayDelay -= dt; }
+		
 		// toggle the mouse control scheme on space key
-		if (services.input.isJustDown(Keys.SPACE)) {
+		if (services.input.isJustDown(Keys.BACKSLASH)) {
 			buildModeEnabled = !buildModeEnabled;
 			
 			this.scene.dispose();
 			this.scene = new Scene(worldEvents, level, services.physics);
-			this.levelSize = level.calculateSize();
 			
 			if (buildModeEnabled) {
+				gearsSound.stop();
 				services.physics.pause(true);
 				services.input.removeMouseWatcher(inGameMouseWatcher);
 				services.input.addMouseWatcher(buildModeMouseWatcher);
@@ -233,7 +352,12 @@ public class PlayGameState implements GameState {
 			Level.save(level, "level" + levelNum + ".txt");
 		}
 		
-		if (services.input.isJustDown(Keys.R)) {
+		if (services.input.isJustDown(Keys.U)) {
+			level.undo();
+		}
+		
+		if (levelNum > 1 && (services.input.isJustDown(Keys.SPACE) || services.input.isJustDown(Keys.R))) {
+			scene.killAllMinions();
 			isEnding = true;
 		}
 		
@@ -265,14 +389,14 @@ public class PlayGameState implements GameState {
 	@Override
 	public void render(float dt) {
 		if (!buildModeEnabled) {
-			int scaleXY = (int) Math.min(services.gfx.getWidth() / (levelSize.x + levelSize.width), services.gfx.getHeight() / (levelSize.y + levelSize.height));
+			int scaleXY = (int) Math.min(services.gfx.getWidth() / (scene.getLevelSize().x + scene.getLevelSize().width), services.gfx.getHeight() / (scene.getLevelSize().y + scene.getLevelSize().height));
 			scaleX = scaleXY;
 			scaleY = scaleXY;
 		}
 		Matrix4 worldTransform = new Matrix4().scale(scaleX, scaleY, 1f);
 		
 		if (!buildModeEnabled) {
-			worldTransform.translate(-levelSize.x/2f, -levelSize.y/2f, 0);
+			worldTransform.translate(-scene.getLevelSize().x/2f, -scene.getLevelSize().y/2f, 0);
 		}
 		
 		services.gfx.setTransformMatrix(worldTransform);
@@ -300,8 +424,10 @@ public class PlayGameState implements GameState {
 			scene.dispose();
 		}
 		this.level = Level.load("level" + levelNum + ".txt");
-		this.levelSize = level.calculateSize();
 		this.scene = new Scene(worldEvents, level, services.physics);
+		
+		this.services.jukebox.play("music/" + level.music);
+		gearsSound.stop();
 	}
 	
 	private void advanceLevel() {

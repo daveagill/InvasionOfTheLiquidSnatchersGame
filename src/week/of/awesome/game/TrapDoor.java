@@ -7,9 +7,11 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 
 public class TrapDoor implements Activatable {
 	
+	private TrapDoorSpec spec;
 	private Body body;
 	
-	public TrapDoor(Body body) {
+	public TrapDoor(TrapDoorSpec spec, Body body) {
+		this.spec = spec;
 		this.body = body;
 	}
 	
@@ -20,10 +22,15 @@ public class TrapDoor implements Activatable {
 	public float getRotation() {
 		return body.getAngle() * MathUtils.radiansToDegrees;
 	}
+	
+	public float getWidth() {
+		return spec.width;
+	}
 
 	@Override
-	public void activate() {
+	public void activate(WorldEvents events) {
 		body.setType(BodyType.DynamicBody);
+		events.trapdoorActivated();
 	}
 
 }

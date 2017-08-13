@@ -6,4 +6,5 @@ public class MinionSpec {
 	public Vector2 position;
 	public String dialog;
 	public Droplet.Type fluidType;
+	public boolean essential;
 }

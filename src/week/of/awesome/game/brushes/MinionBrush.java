@@ -19,15 +19,16 @@ public class MinionBrush implements Brush {
 	public String getName() { return "MinionBrush(" + type + ")"; }
 
 	@Override
-	public void beginBrush(Level level, int x, int y) { }
+	public void beginBrush(Level level, int x, int y, float worldX, float worldY) { }
 
 	@Override
-	public void endBrush(Level level, int x, int y) {
+	public void endBrush(Level level, int x, int y, float worldX, float worldY) {
 		MinionSpec spec = new MinionSpec();
 		spec.position = new Vector2(x, y);
 		spec.fluidType = type;
 		spec.dialog = JOptionPane.showInputDialog(null, "Enter Dialog");
 		level.minions.add(spec);
+		level.undoHistory.add(spec);
 	}
 
 }

@@ -1,0 +1,249 @@
+<level music="Infinite Perspective.mp3">
+	<bgText x="2.0" y="20.0" text="MAGMA FORGE"/>
+	<minion x="10.0" y="10.0" essential="true" type="WATER"/>
+	<minion x="20.0" y="9.0" essential="true" type="OIL"/>
+	<minion x="4.0" y="8.0" essential="true" dialog="With your magma core we can forge new saucerships!" type="WATER"/>
+	<solid minX="35.0" minY="2.0" maxX="36.0" maxY="3.0"/>
+	<solid minX="17.0" minY="3.0" maxX="18.0" maxY="4.0"/>
+	<solid minX="35.0" minY="3.0" maxX="36.0" maxY="4.0"/>
+	<solid minX="22.0" minY="10.0" maxX="23.0" maxY="11.0"/>
+	<solid minX="22.0" minY="9.0" maxX="23.0" maxY="10.0"/>
+	<solid minX="21.0" minY="8.0" maxX="22.0" maxY="9.0"/>
+	<solid minX="31.0" minY="8.0" maxX="32.0" maxY="9.0"/>
+	<solid minX="31.0" minY="9.0" maxX="32.0" maxY="10.0"/>
+	<solid minX="31.0" minY="10.0" maxX="32.0" maxY="11.0"/>
+	<solid minX="30.0" minY="9.0" maxX="31.0" maxY="12.0"/>
+	<solid minX="23.0" minY="10.0" maxX="24.0" maxY="12.0"/>
+	<solid minX="29.0" minY="10.0" maxX="30.0" maxY="12.0"/>
+	<solid minX="29.0" minY="5.0" maxX="30.0" maxY="6.0"/>
+	<solid minX="28.0" minY="11.0" maxX="29.0" maxY="16.0"/>
+	<solid minX="24.0" minY="11.0" maxX="25.0" maxY="16.0"/>
+	<solid minX="31.0" minY="7.0" maxX="32.0" maxY="8.0"/>
+	<solid minX="21.0" minY="7.0" maxX="22.0" maxY="8.0"/>
+	<solid minX="22.0" minY="8.0" maxX="23.0" maxY="9.0"/>
+	<solid minX="23.0" minY="9.0" maxX="24.0" maxY="10.0"/>
+	<solid minX="24.0" minY="10.0" maxX="25.0" maxY="11.0"/>
+	<solid minX="28.0" minY="10.0" maxX="29.0" maxY="11.0"/>
+	<solid minX="29.0" minY="9.0" maxX="30.0" maxY="10.0"/>
+	<solid minX="30.0" minY="8.0" maxX="31.0" maxY="9.0"/>
+	<solid minX="31.0" minY="5.0" maxX="32.0" maxY="7.0"/>
+	<solid minX="21.0" minY="5.0" maxX="22.0" maxY="7.0"/>
+	<solid minX="17.0" minY="2.0" maxX="18.0" maxY="3.0"/>
+	<solid minX="30.0" minY="3.0" maxX="31.0" maxY="4.0"/>
+	<solid minX="22.0" minY="3.0" maxX="23.0" maxY="4.0"/>
+	<solid minX="21.0" minY="3.0" maxX="22.0" maxY="4.0"/>
+	<solid minX="31.0" minY="3.0" maxX="32.0" maxY="4.0"/>
+	<solid minX="29.0" minY="3.0" maxX="30.0" maxY="4.0"/>
+	<solid minX="23.0" minY="3.0" maxX="24.0" maxY="4.0"/>
+	<solid minX="25.0" minY="8.0" maxX="26.0" maxY="9.0"/>
+	<solid minX="24.0" minY="7.0" maxX="26.0" maxY="8.0"/>
+	<solid minX="27.0" minY="8.0" maxX="28.0" maxY="9.0"/>
+	<solid minX="27.0" minY="7.0" maxX="29.0" maxY="8.0"/>
+	<solid minX="23.0" minY="3.0" maxX="24.0" maxY="4.0"/>
+	<solid minX="23.0" minY="5.0" maxX="24.0" maxY="6.0"/>
+	<solid minX="22.0" minY="11.0" maxX="23.0" maxY="12.0"/>
+	<solid minX="33.0" minY="6.0" maxX="34.0" maxY="8.0"/>
+	<solid minX="19.0" minY="6.0" maxX="20.0" maxY="8.0"/>
+	<solid minX="34.0" minY="5.0" maxX="35.0" maxY="7.0"/>
+	<solid minX="18.0" minY="5.0" maxX="19.0" maxY="7.0"/>
+	<solid minX="35.0" minY="4.0" maxX="36.0" maxY="6.0"/>
+	<solid minX="17.0" minY="4.0" maxX="18.0" maxY="6.0"/>
+	<solid minX="29.0" minY="12.0" maxX="30.0" maxY="13.0"/>
+	<solid minX="23.0" minY="12.0" maxX="24.0" maxY="13.0"/>
+	<solid minX="26.0" minY="5.0" maxX="27.0" maxY="6.0"/>
+	<solid minX="32.0" minY="7.0" maxX="33.0" maxY="9.0"/>
+	<solid minX="17.0" minY="1.0" maxX="18.0" maxY="2.0"/>
+	<solid minX="17.0" minY="0.0" maxX="18.0" maxY="1.0"/>
+	<solid minX="35.0" minY="1.0" maxX="36.0" maxY="2.0"/>
+	<solid minX="35.0" minY="0.0" maxX="36.0" maxY="1.0"/>
+	<solid minX="26.0" minY="14.0" maxX="27.0" maxY="15.0"/>
+	<solid minX="24.0" minY="16.0" maxX="25.0" maxY="17.0"/>
+	<solid minX="24.0" minY="17.0" maxX="25.0" maxY="18.0"/>
+	<solid minX="27.0" minY="12.0" maxX="28.0" maxY="13.0"/>
+	<solid minX="25.0" minY="12.0" maxX="26.0" maxY="13.0"/>
+	<solid minX="26.0" minY="9.0" maxX="27.0" maxY="10.0"/>
+	<solid minX="26.0" minY="8.0" maxX="27.0" maxY="9.0"/>
+	<solid minX="23.0" minY="17.0" maxX="24.0" maxY="18.0"/>
+	<solid minX="22.0" minY="17.0" maxX="23.0" maxY="18.0"/>
+	<solid minX="25.0" minY="16.0" maxX="26.0" maxY="17.0"/>
+	<solid minX="25.0" minY="17.0" maxX="26.0" maxY="18.0"/>
+	<solid minX="22.0" minY="18.0" maxX="23.0" maxY="19.0"/>
+	<solid minX="23.0" minY="18.0" maxX="24.0" maxY="19.0"/>
+	<solid minX="22.0" minY="19.0" maxX="23.0" maxY="20.0"/>
+	<solid minX="27.0" minY="16.0" maxX="28.0" maxY="18.0"/>
+	<solid minX="28.0" minY="17.0" maxX="30.0" maxY="18.0"/>
+	<solid minX="29.0" minY="18.0" maxX="30.0" maxY="19.0"/>
+	<solid minX="28.0" minY="16.0" maxX="29.0" maxY="17.0"/>
+	<solid minX="29.0" minY="19.0" maxX="30.0" maxY="23.0"/>
+	<solid minX="10.0" minY="4.0" maxX="11.0" maxY="10.0"/>
+	<solid minX="15.0" minY="5.0" maxX="16.0" maxY="9.0"/>
+	<solid minX="10.0" minY="3.0" maxX="11.0" maxY="4.0"/>
+	<solid minX="16.0" minY="5.0" maxX="17.0" maxY="6.0"/>
+	<solid minX="16.0" minY="9.0" maxX="17.0" maxY="10.0"/>
+	<solid minX="9.0" minY="9.0" maxX="10.0" maxY="10.0"/>
+	<solid minX="4.0" minY="14.0" maxX="9.0" maxY="15.0"/>
+	<solid minX="16.0" minY="13.0" maxX="17.0" maxY="15.0"/>
+	<solid minX="9.0" minY="13.0" maxX="10.0" maxY="15.0"/>
+	<solid minX="16.0" minY="15.0" maxX="17.0" maxY="16.0"/>
+	<solid minX="9.0" minY="15.0" maxX="10.0" maxY="16.0"/>
+	<solid minX="20.0" minY="7.0" maxX="21.0" maxY="8.0"/>
+	<solid minX="17.0" minY="14.0" maxX="20.0" maxY="15.0"/>
+	<solid minX="0.0" minY="4.0" maxX="1.0" maxY="5.0"/>
+	<solid minX="1.0" minY="20.0" maxX="2.0" maxY="21.0"/>
+	<solid minX="1.0" minY="18.0" maxX="2.0" maxY="19.0"/>
+	<solid minX="1.0" minY="19.0" maxX="2.0" maxY="20.0"/>
+	<solid minX="0.0" minY="16.0" maxX="1.0" maxY="17.0"/>
+	<solid minX="0.0" minY="17.0" maxX="1.0" maxY="18.0"/>
+	<solid minX="0.0" minY="19.0" maxX="1.0" maxY="24.0"/>
+	<solid minX="0.0" minY="18.0" maxX="1.0" maxY="19.0"/>
+	<solid minX="1.0" minY="21.0" maxX="2.0" maxY="24.0"/>
+	<solid minX="2.0" minY="21.0" maxX="3.0" maxY="22.0"/>
+	<solid minX="2.0" minY="22.0" maxX="3.0" maxY="24.0"/>
+	<solid minX="3.0" minY="23.0" maxX="4.0" maxY="24.0"/>
+	<solid minX="3.0" minY="21.0" maxX="9.0" maxY="22.0"/>
+	<solid minX="6.0" minY="4.0" maxX="7.0" maxY="5.0"/>
+	<solid minX="0.0" minY="0.0" maxX="1.0" maxY="4.0"/>
+	<solid minX="5.0" minY="4.0" maxX="6.0" maxY="5.0"/>
+	<solid minX="5.0" minY="12.0" maxX="6.0" maxY="14.0"/>
+	<solid minX="7.0" minY="13.0" maxX="8.0" maxY="14.0"/>
+	<solid minX="0.0" minY="5.0" maxX="1.0" maxY="6.0"/>
+	<solid minX="0.0" minY="5.0" maxX="1.0" maxY="9.0"/>
+	<solid minX="0.0" minY="9.0" maxX="1.0" maxY="12.0"/>
+	<solid minX="15.0" minY="15.0" maxX="16.0" maxY="16.0"/>
+	<solid minX="17.0" minY="9.0" maxX="18.0" maxY="10.0"/>
+	<solid minX="21.0" minY="9.0" maxX="22.0" maxY="10.0"/>
+	<solid minX="18.0" minY="9.0" maxX="19.0" maxY="10.0"/>
+	<solid minX="10.0" minY="12.0" maxX="16.0" maxY="13.0"/>
+	<solid minX="15.0" minY="9.0" maxX="16.0" maxY="10.0"/>
+	<solid minX="14.0" minY="9.0" maxX="15.0" maxY="10.0"/>
+	<solid minX="14.0" minY="15.0" maxX="15.0" maxY="16.0"/>
+	<solid minX="13.0" minY="15.0" maxX="14.0" maxY="16.0"/>
+	<solid minX="5.0" minY="7.0" maxX="8.0" maxY="8.0"/>
+	<solid minX="8.0" minY="7.0" maxX="10.0" maxY="8.0"/>
+	<solid minX="7.0" minY="2.0" maxX="11.0" maxY="3.0"/>
+	<solid minX="10.0" minY="2.0" maxX="11.0" maxY="3.0"/>
+	<solid minX="21.0" minY="19.0" maxX="22.0" maxY="20.0"/>
+	<solid minX="1.0" minY="4.0" maxX="5.0" maxY="5.0"/>
+	<solid minX="10.0" minY="15.0" maxX="11.0" maxY="16.0"/>
+	<solid minX="0.0" minY="24.0" maxX="1.0" maxY="27.0"/>
+	<solid minX="1.0" minY="24.0" maxX="2.0" maxY="26.0"/>
+	<solid minX="2.0" minY="24.0" maxX="3.0" maxY="25.0"/>
+	<solid minX="3.0" minY="22.0" maxX="4.0" maxY="23.0"/>
+	<solid minX="4.0" minY="22.0" maxX="5.0" maxY="23.0"/>
+	<solid minX="6.0" minY="3.0" maxX="7.0" maxY="4.0"/>
+	<solid minX="6.0" minY="2.0" maxX="7.0" maxY="3.0"/>
+	<solid minX="28.0" minY="23.0" maxX="29.0" maxY="24.0"/>
+	<solid minX="30.0" minY="23.0" maxX="31.0" maxY="24.0"/>
+	<solid minX="29.0" minY="23.0" maxX="30.0" maxY="24.0"/>
+	<solid minX="29.0" minY="24.0" maxX="30.0" maxY="25.0"/>
+	<solid minX="30.0" minY="24.0" maxX="31.0" maxY="25.0"/>
+	<solid minX="28.0" minY="24.0" maxX="29.0" maxY="25.0"/>
+	<leftSlope x="27.0" y="9.0"/>
+	<leftSlope x="28.0" y="8.0"/>
+	<leftSlope x="29.0" y="7.0"/>
+	<leftSlope x="27.0" y="5.0"/>
+	<leftSlope x="11.0" y="31.0"/>
+	<leftSlope x="11.0" y="32.0"/>
+	<leftSlope x="11.0" y="33.0"/>
+	<leftSlope x="11.0" y="34.0"/>
+	<leftSlope x="11.0" y="35.0"/>
+	<leftSlope x="14.0" y="10.0"/>
+	<rightSlope x="25.0" y="9.0"/>
+	<rightSlope x="24.0" y="8.0"/>
+	<rightSlope x="23.0" y="7.0"/>
+	<rightSlope x="25.0" y="5.0"/>
+	<rightSlope x="4.0" y="31.0"/>
+	<rightSlope x="4.0" y="32.0"/>
+	<rightSlope x="4.0" y="33.0"/>
+	<rightSlope x="4.0" y="34.0"/>
+	<rightSlope x="4.0" y="35.0"/>
+	<rightSlope x="10.0" y="16.0"/>
+	<prop x="17.0" y="15.0" type="DOMINO"/>
+	<prop x="17.8" y="15.0" type="DOMINO"/>
+	<prop x="18.599998" y="15.0" type="DOMINO"/>
+	<prop x="12.0" y="5.0" type="BALL"/>
+	<prop x="14.0" y="7.0" type="BALL"/>
+	<prop x="13.0" y="9.0" type="BALL"/>
+	<prop x="11.0" y="8.0" type="BALL"/>
+	<prop x="12.0" y="7.0" type="BALL"/>
+	<prop x="16.0" y="16.0" type="BALL"/>
+	<prop x="22.0" y="12.0" type="BALL"/>
+	<prop x="18.0" y="10.0" type="BALL"/>
+	<prop x="21.0" y="10.0" type="BALL"/>
+	<prop x="3.8" y="15.0" type="DOMINO"/>
+	<prop x="4.6" y="15.0" type="DOMINO"/>
+	<prop x="5.4" y="15.0" type="DOMINO"/>
+	<prop x="6.2000003" y="15.0" type="DOMINO"/>
+	<prop x="7.0000005" y="15.0" type="DOMINO"/>
+	<prop x="7.8000007" y="15.0" type="DOMINO"/>
+	<prop x="9.0" y="16.0" type="BALL"/>
+	<well id="63ecf518-556f-4c15-96f4-b62ef144f3c5" minX="16.0" minY="6.0" maxX="19.0" maxY="8.0" percentFull="0.9" affinity="WATER"/>
+	<well id="7404afa6-50cb-4e49-a1d2-e163b77e7265" minX="1.0" minY="0.0" maxX="38.0" maxY="3.0" percentFull="0.38" affinity="MAGMA"/>
+	<well id="b50ac8db-51ed-4fae-b344-b28692b7e136" minX="7.0" minY="3.0" maxX="10.0" maxY="5.0" percentFull="0.0" affinity="WATER"/>
+	<well id="fde02ab6-2ad0-4510-9fbd-79d8ee95d27b" minX="10.0" minY="13.0" maxX="16.0" maxY="15.0" percentFull="0.7" affinity="OIL"/>
+	<vat minX="27.0" minY="10.0" maxX="28.0" maxY="12.0" type="MAGMA"/>
+	<vat minX="25.0" minY="10.0" maxX="26.0" maxY="12.0" type="MAGMA"/>
+	<vat minX="28.0" minY="9.0" maxX="29.0" maxY="10.0" type="MAGMA"/>
+	<vat minX="29.0" minY="8.0" maxX="30.0" maxY="9.0" type="MAGMA"/>
+	<vat minX="24.0" minY="9.0" maxX="25.0" maxY="10.0" type="MAGMA"/>
+	<vat minX="23.0" minY="8.0" maxX="24.0" maxY="9.0" type="MAGMA"/>
+	<vat minX="22.0" minY="6.0" maxX="23.0" maxY="8.0" type="MAGMA"/>
+	<vat minX="30.0" minY="6.0" maxX="31.0" maxY="8.0" type="MAGMA"/>
+	<vat minX="28.0" minY="6.0" maxX="30.0" maxY="7.0" type="MAGMA"/>
+	<vat minX="23.0" minY="6.0" maxX="26.0" maxY="7.0" type="MAGMA"/>
+	<vat minX="26.0" minY="10.0" maxX="27.0" maxY="14.0" type="MAGMA"/>
+	<vat minX="27.0" minY="13.0" maxX="28.0" maxY="16.0" type="MAGMA"/>
+	<vat minX="25.0" minY="13.0" maxX="26.0" maxY="16.0" type="MAGMA"/>
+	<vat minX="26.0" minY="15.0" maxX="27.0" maxY="18.0" type="MAGMA"/>
+	<vat minX="26.0" minY="18.0" maxX="27.0" maxY="20.0" type="MAGMA"/>
+	<vat minX="27.0" minY="6.0" maxX="28.0" maxY="7.0" type="MAGMA"/>
+	<vat minX="26.0" minY="6.0" maxX="27.0" maxY="7.0" type="MAGMA"/>
+	<vat minX="30.0" minY="4.0" maxX="31.0" maxY="6.0" type="MAGMA"/>
+	<vat minX="22.0" minY="4.0" maxX="23.0" maxY="6.0" type="MAGMA"/>
+	<vat minX="20.0" minY="4.0" maxX="22.0" maxY="5.0" type="MAGMA"/>
+	<vat minX="23.0" minY="4.0" maxX="25.0" maxY="5.0" type="MAGMA"/>
+	<vat minX="28.0" minY="4.0" maxX="30.0" maxY="5.0" type="MAGMA"/>
+	<vat minX="31.0" minY="4.0" maxX="33.0" maxY="5.0" type="MAGMA"/>
+	<vat minX="5.0" minY="31.0" maxX="11.0" maxY="35.0" type="MAGMA"/>
+	<vat minX="11.0" minY="5.0" maxX="15.0" maxY="7.0" type="MAGMA"/>
+	<beam minX="3.0" minY="18.0" maxX="21.0" maxY="20.0" dir="LEFT"/>
+	<platform height="10.0" x="20.0" y="8.0">
+		<wellActivationID>63ecf518-556f-4c15-96f4-b62ef144f3c5</wellActivationID>
+	</platform>
+	<trapdoor width="5.0" x="11.0" y="4.0">
+		<wellActivationID>b50ac8db-51ed-4fae-b344-b28692b7e136</wellActivationID>
+	</trapdoor>
+	<trapdoor width="4.0" x="1.0" y="7.0">
+		<wellActivationID>fde02ab6-2ad0-4510-9fbd-79d8ee95d27b</wellActivationID>
+	</trapdoor>
+	<trapdoor width="7.0" x="4.0" y="30.0">
+		<wellActivationID>fde02ab6-2ad0-4510-9fbd-79d8ee95d27b</wellActivationID>
+	</trapdoor>
+	<gear radius="1.9965681" rotatesRight="true" x="4.2222223" y="27.518518">
+		<wellActivationID>fde02ab6-2ad0-4510-9fbd-79d8ee95d27b</wellActivationID>
+	</gear>
+	<gear radius="1.7808625" rotatesRight="true" x="6.185185" y="26.481482">
+		<wellActivationID>fde02ab6-2ad0-4510-9fbd-79d8ee95d27b</wellActivationID>
+	</gear>
+	<gear radius="1.5117279" rotatesRight="true" x="7.6666665" y="25.555555">
+		<wellActivationID>fde02ab6-2ad0-4510-9fbd-79d8ee95d27b</wellActivationID>
+	</gear>
+	<gear radius="1.874308" rotatesRight="true" x="9.740741" y="24.62963">
+		<wellActivationID>fde02ab6-2ad0-4510-9fbd-79d8ee95d27b</wellActivationID>
+	</gear>
+	<gear radius="1.8972216" rotatesRight="true" x="12.037037" y="23.74074">
+		<wellActivationID>fde02ab6-2ad0-4510-9fbd-79d8ee95d27b</wellActivationID>
+	</gear>
+	<gear radius="2.0581398" rotatesRight="true" x="14.62963" y="22.703703">
+		<wellActivationID>fde02ab6-2ad0-4510-9fbd-79d8ee95d27b</wellActivationID>
+	</gear>
+	<gear radius="1.5722232" rotatesRight="true" x="17.185184" y="21.814816">
+		<wellActivationID>fde02ab6-2ad0-4510-9fbd-79d8ee95d27b</wellActivationID>
+	</gear>
+	<gear radius="1.4749855" rotatesRight="true" x="19.555555" y="20.74074">
+		<wellActivationID>fde02ab6-2ad0-4510-9fbd-79d8ee95d27b</wellActivationID>
+	</gear>
+	<spaceship silent="false" x="9.0" y="-5.0">
+		<wellActivationID>7404afa6-50cb-4e49-a1d2-e163b77e7265</wellActivationID>
+	</spaceship>
+</level>

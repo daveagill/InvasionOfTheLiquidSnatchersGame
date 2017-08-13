@@ -5,19 +5,22 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.utils.Disposable;
 
 public class JukeboxService implements Disposable {
-	private static final float MAX_VOLUME = 0.5f;
+	private static final float MAX_VOLUME = 0.3f;
 	private static final float FADE_SECS = 1f;
 	
+	private String currentFile;
 	private Music currentlyPlaying;
 	private Music previouslyPlaying;
 	
 	public void play(String file) {
+		if (file.equals(currentFile)) { return; }
 		Music m = Gdx.audio.newMusic(Gdx.files.internal(file));
 		m.setLooping(true);
 		m.play();
 		
 		setPrevious(currentlyPlaying);
 		currentlyPlaying = m;
+		currentFile = file;
 	}
 	
 	public void update(float dt) {

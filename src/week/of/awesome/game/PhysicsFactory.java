@@ -44,16 +44,17 @@ public class PhysicsFactory {
 		physics.removeBody(b);
 	}
 	
-	public Body createSolidBlock(Vector2 position) {
+	public Body createSolidBlock(Vector2 minPosition, Vector2 maxPosition) {
 		BodyDef bodyDef = new BodyDef();
 		bodyDef.type = BodyDef.BodyType.StaticBody;
-		bodyDef.position.set(position);
+		bodyDef.position.set(minPosition);
 		
 		Body b = physics.createBody(bodyDef);
 		
+		float width = maxPosition.x - minPosition.x;
+		float height = maxPosition.y - minPosition.y;
 		PolygonShape box = new PolygonShape();
-		box.setAsBox(0.5f, 0.5f, new Vector2(0.5f, 0.5f), 0f);
-		
+		box.setAsBox(width/2, height/2, new Vector2(width/2, height/2), 0f);
 		
 		FixtureDef fixtureDef = new FixtureDef();
 		fixtureDef.shape = box;
@@ -94,7 +95,7 @@ public class PhysicsFactory {
 		FixtureDef fixtureDef = new FixtureDef();
 		fixtureDef.shape = triangle;
 		fixtureDef.filter.categoryBits = SCENERY;
-		fixtureDef.friction = 0f;
+		fixtureDef.friction = 1f;
 		//fixtureDef.restitution = 1;
 		
 		b.createFixture(fixtureDef);
@@ -120,7 +121,7 @@ public class PhysicsFactory {
 		fixtureDef.filter.categoryBits = LIQUID;
 		fixtureDef.filter.maskBits = LIQUID | SCENERY | PROPLIKE;
 		//fixtureDef.density = 1;
-		fixtureDef.friction = 0.01f;
+		fixtureDef.friction = 0.01f;//0.01f;
 		fixtureDef.restitution = 0.2f;
 		
 		b.createFixture(fixtureDef);
@@ -173,7 +174,7 @@ public class PhysicsFactory {
 		return b;
 	}
 	
-	public BodySet createTrapDoor(Vector2 position) {
+	public BodySet createTrapDoor(Vector2 position, float width) {
 		BodyDef hingeBodyDef = new BodyDef();
 		hingeBodyDef.type = BodyDef.BodyType.StaticBody;
 		hingeBodyDef.position.set(position).add(0, 1f);
@@ -193,12 +194,14 @@ public class PhysicsFactory {
 		physics.createJoint(jointDef);
 		
 		PolygonShape box = new PolygonShape();
-		box.setAsBox(0.5f, 0.1f, new Vector2(0.5f, -0.1f), 0f);
+		float halfWidth = width / 2f;
+		box.setAsBox(halfWidth, 0.1f, new Vector2(halfWidth, -0.1f), 0f);
 		
 		
 		FixtureDef fixtureDef = new FixtureDef();
 		fixtureDef.shape = box;
-		fixtureDef.density = 0.3f;
+		fixtureDef.density = 50f;//0.3f;
+		fixtureDef.friction = 1f;
 		fixtureDef.filter.categoryBits = SCENERY;
 		fixtureDef.filter.maskBits = LIQUID | ENTITY | PROPLIKE;
 		b.createFixture(fixtureDef);
@@ -226,8 +229,8 @@ public class PhysicsFactory {
 		fixtureDef.density=0.1f;
 		
 		CircleShape headShape = new CircleShape();
-		headShape.setRadius(0.1f);
-		headShape.setPosition(new Vector2(0f, 0.3f));
+		headShape.setRadius(0.2f);
+		headShape.setPosition(new Vector2(0f, 0.4f));
 		
 		FixtureDef headFixtureDef = new FixtureDef();
 		headFixtureDef.shape = headShape;
@@ -249,12 +252,12 @@ public class PhysicsFactory {
 		Body b = physics.createBody(bodyDef);
 		
 		CircleShape circle = new CircleShape();
-		circle.setRadius(0.4f);
+		circle.setRadius(0.45f);
 		
 		FixtureDef fixtureDef = new FixtureDef();
 		fixtureDef.shape = circle;
 		fixtureDef.filter.categoryBits = PROPLIKE;
-		fixtureDef.density = 9999999;
+		fixtureDef.density = 100f;
 		fixtureDef.friction = 0.9f;
 		
 		b.createFixture(fixtureDef);
@@ -276,7 +279,8 @@ public class PhysicsFactory {
 		FixtureDef fixtureDef = new FixtureDef();
 		fixtureDef.shape = box;
 		fixtureDef.filter.categoryBits = PROPLIKE;
-		fixtureDef.density = 9999999;
+		fixtureDef.filter.maskBits = SCENERY | PROPLIKE | KILLSPOT;
+		fixtureDef.density = 50f;
 		fixtureDef.friction = 0.9f;
 		
 		b.createFixture(fixtureDef);
@@ -290,7 +294,7 @@ public class PhysicsFactory {
 		hingeBodyDef.position.set(position);
 		
 		BodyDef bodyDef = new BodyDef();
-		bodyDef.type = BodyDef.BodyType.DynamicBody;
+		bodyDef.type = BodyDef.BodyType.StaticBody;
 		bodyDef.position.set(position);
 		
 		Body b = physics.createBody(bodyDef);
@@ -303,7 +307,7 @@ public class PhysicsFactory {
 		physics.createJoint(jointDef);
 		
 		CircleShape circle = new CircleShape();
-		circle.setRadius(radius);
+		circle.setRadius(radius * 0.95f);
 		
 		FixtureDef fixtureDef = new FixtureDef();
 		fixtureDef.shape = circle;

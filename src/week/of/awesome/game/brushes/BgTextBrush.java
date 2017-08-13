@@ -11,16 +11,17 @@ public class BgTextBrush implements Brush {
 
 
 	@Override
-	public void beginBrush(Level level, int x, int y) { }
+	public void beginBrush(Level level, int x, int y, float worldX, float worldY) { }
 
 	@Override
-	public void endBrush(Level level, int x, int y) {
+	public void endBrush(Level level, int x, int y, float worldX, float worldY) {
 		BgTextSpec spec = new BgTextSpec();
 		spec.position = new Vector2(x, y);
 		spec.text = JOptionPane.showInputDialog(null, "Enter Text");
 		
 		if (spec.text != null) {
 			level.bgTexts.add(spec);
+			level.undoHistory.add(spec);
 		}
 	}
 

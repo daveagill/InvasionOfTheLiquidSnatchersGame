@@ -6,4 +6,5 @@ public class WellSpec {
 	public String id;
 	public Vector2 min, max;
 	public Droplet.Type affinity;
+	public float percentFull;
 }

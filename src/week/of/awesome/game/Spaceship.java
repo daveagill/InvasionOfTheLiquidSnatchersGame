@@ -8,27 +8,28 @@ public class Spaceship implements Activatable {
 	private static final float WIGGLE_SPEED = 0.5f;
 	private static final float WIGGLE_AMPLITUDE = 2f;
 	
-	private Vector2 position;
+	private SpaceshipSpec spec;
 	private float xOffset;
 	private float yOffset;
 	private float ySpeed;
 	private boolean activated;
 	
 	public Spaceship(SpaceshipSpec spec) {
-		this.position = spec.position;
+		this.spec = spec;
 	}
 	
 	public Vector2 getPosition() {
-		return position.cpy().add(xOffset, yOffset);
+		return spec.position.cpy().add(xOffset, yOffset);
 	}
 
 	@Override
-	public void activate() {
+	public void activate(WorldEvents events) {
 		activated = true;
+		events.spaceshipActivated(spec.silent);
 	}
 	
 	public boolean hasFlownOff() {
-		return yOffset >= 15;
+		return yOffset >= 10;
 	}
 
 	

@@ -10,12 +10,12 @@ public class DominosBrush implements Brush {
 	private int initialX;
 
 	@Override
-	public void beginBrush(Level level, int x, int y) {
+	public void beginBrush(Level level, int x, int y, float worldX, float worldY) {
 		this.initialX = x;
 	}
 
 	@Override
-	public void endBrush(Level level, int x, int y) {
+	public void endBrush(Level level, int x, int y, float worldX, float worldY) {
 		if (x < initialX) { return; }
 		
 		for (float dominoX = initialX; dominoX < x+1; dominoX += 0.8f) {
@@ -23,6 +23,7 @@ public class DominosBrush implements Brush {
 			spec.position = new Vector2(dominoX, y);
 			spec.type = PropSpec.Type.DOMINO;
 			level.props.add(spec);
+			level.undoHistory.add(spec);
 		}
 	}
 

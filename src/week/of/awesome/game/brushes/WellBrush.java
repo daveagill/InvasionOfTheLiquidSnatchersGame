@@ -20,13 +20,13 @@ public class WellBrush implements Brush {
 	public String getName() { return "WellBrush(" + affinity + ")"; }
 	
 	@Override
-	public void beginBrush(Level level, int x, int y) {
+	public void beginBrush(Level level, int x, int y, float worldX, float worldY) {
 		this.initialX = x;
 		this.initialY = y;
 	}
 
 	@Override
-	public void endBrush(Level level, int x, int y) {
+	public void endBrush(Level level, int x, int y, float worldX, float worldY) {
 		int minX = Math.min(initialX, x);
 		int minY = Math.min(initialY, y);
 		
@@ -40,6 +40,7 @@ public class WellBrush implements Brush {
 		wellSpec.affinity = affinity;
 		
 		level.wells.add(wellSpec);
+		level.undoHistory.add(wellSpec);
 	}
 
 }

@@ -30,8 +30,6 @@ public class FluidRenderer {
 	private Texture wellFillSolidTex;
 	private ShaderProgram shader;
 	
-	
-	
 	public FluidRenderer(RenderService gfx, GraphicsResources resources) {
 		this.gfx = gfx;
 		
@@ -50,8 +48,10 @@ public class FluidRenderer {
 		Color c = new Color();
 		
 		for (Droplet p : particles) {
-			c.set(typeToColour(p.getType()));
-			c.lerp(Color.WHITE, p.getFrothiness() * typeToFrothFactor(p.getType()) + 0.05f);
+			float froth = p.getFrothiness() * p.getType().FROTH_FACTOR + 0.05f;
+			c.r = p.getColour().r + froth * (Color.WHITE.r - p.getColour().r);
+			c.g = p.getColour().g + froth * (Color.WHITE.g - p.getColour().g);
+			c.b = p.getColour().b + froth * (Color.WHITE.b - p.getColour().b);
 			c.a = p.getAlpha();
 			gfx.drawCenteredTinted(particleTex, p.getPosition(), 0.5f, 0.5f, false, c);
 		}
@@ -61,7 +61,7 @@ public class FluidRenderer {
 			if (well.getPercentFull() <= 0) { continue; }
 			float width = well.getMaxPosition().x - well.getMinPosition().x;
 			float height = (well.getMaxPosition().y - well.getMinPosition().y) * well.getPercentFull();
-			c.set(typeToColour(well.getDropletAffinity()));
+			c.set(well.getDropletAffinity().COLOUR);
 			
 			final float surfaceHeight = 0.5f;
 			if (height < surfaceHeight) {
@@ -84,25 +84,4 @@ public class FluidRenderer {
 		ShaderProgram.pedantic = true;
 	}
 	
-	public static Color typeToColour(Droplet.Type type) {
-		switch (type) {
-			case WATER: return WATER_COLOUR;
-			case BLOOD: return BLOOD_COLOUR;
-			case MAGMA: return MAGMA_COLOUR;
-			case OIL:   return OIL_COLOUR;
-			case WASTE: return NUCLEAR_WASTE_COLOUR;
-		}
-		throw new RuntimeException("Unhandled droplet type: " + type);
-	}
-	
-	private static float typeToFrothFactor(Droplet.Type type) {
-		switch (type) {
-		case WATER: return 0.2f;
-		case BLOOD: return 0.2f;
-		case MAGMA: return 0.2f;
-		case OIL:   return 0.02f;
-		case WASTE: return 0.2f;
-	}
-	throw new RuntimeException("Unhandled droplet type: " + type);
-	}
 }

@@ -1,6 +1,7 @@
 package week.of.awesome.framework;
 
 import com.badlogic.gdx.ApplicationListener;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.TimeUtils;
 
 public class StandardGameApp implements ApplicationListener {
@@ -8,7 +9,7 @@ public class StandardGameApp implements ApplicationListener {
 	private static final float FIXED_TIMESTEP = 1f / 60f;
 	private static final long FIXED_TIMESTEP_NANOS = (long)(FIXED_TIMESTEP * 1000000000L);
 	
-	
+	private boolean catched = false;
 	private Services services = new Services();
 
 	private GameState currentState;
@@ -72,6 +73,19 @@ public class StandardGameApp implements ApplicationListener {
 		
 		services.jukebox.update(frameSimulationTime);
 		currentState.render(frameSimulationTime);
+		
+		int mouseX = Gdx.input.getX();
+		int mouseY = Gdx.input.getY();
+		if (mouseX >= 0 && mouseX < services.gfx.getWidth() && mouseY >= 0 && mouseY < services.gfx.getHeight()) {
+			if (!catched) {
+				Gdx.input.setCursorCatched(true);
+				catched = true;
+			}
+		} else if (catched) {
+			Gdx.input.setCursorCatched(false); // changing this resets the mouse to somewhere else?! So we need to set it back again...
+			Gdx.input.setCursorPosition(mouseX, mouseY);
+			catched = false;
+		}
 	}
 	
 

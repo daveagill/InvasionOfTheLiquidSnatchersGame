@@ -10,13 +10,13 @@ public class PlatformBrush implements Brush {
 	private int platformX, platformY;
 
 	@Override
-	public void beginBrush(Level level, int x, int y) {
+	public void beginBrush(Level level, int x, int y, float worldX, float worldY) {
 		this.platformX = x;
 		this.platformY = y;
 	}
 
 	@Override
-	public void endBrush(Level level, int x, int y) {
+	public void endBrush(Level level, int x, int y, float worldX, float worldY) {
 		if (y < platformY) { return; }
 		
 		PlatformSpec platformSpec = new PlatformSpec();
@@ -24,6 +24,7 @@ public class PlatformBrush implements Brush {
 		platformSpec.height = y - platformY + 1;
 		
 		level.platforms.add(platformSpec);
+		level.undoHistory.add(platformSpec);
 	}
 
 }

@@ -1,6 +1,7 @@
-<level name="test">
+<level music="Infinite Perspective.mp3">
+	<decal x="0.0" y="7.0" texture="decals/title.png"/>
 	<bgText x="4.0" y="2.0" text="FILL TO PLAY..."/>
-	<minion x="11.0" y="11.0" type="WASTE"/>
+	<minion x="11.0" y="11.0" essential="true" type="WASTE"/>
 	<solid x="3.0" y="0.0"/>
 	<solid x="10.0" y="0.0"/>
 	<solid x="3.0" y="2.0"/>
@@ -31,8 +32,8 @@
 	<solid x="8.0" y="4.0"/>
 	<solid x="11.0" y="5.0"/>
 	<solid x="2.0" y="5.0"/>
-	<well id="b83e72e1-eaba-4957-a7ee-772995cff1ae" minX="4.0" minY="0.0" maxX="10.0" maxY="3.0" affinity="WASTE"/>
-	<spaceship x="20.0" y="3.0">
+	<well id="b83e72e1-eaba-4957-a7ee-772995cff1ae" minX="4.0" minY="0.0" maxX="10.0" maxY="3.0" percentFull="0.6" affinity="WASTE"/>
+	<spaceship x="20.0" y="3.0" silent="false">
 		<wellActivationID>b83e72e1-eaba-4957-a7ee-772995cff1ae</wellActivationID>
 	</spaceship>
 </level>

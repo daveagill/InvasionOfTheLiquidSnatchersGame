@@ -1,0 +1,173 @@
+<level music="Infinite Perspective.mp3">
+	<bgText x="13.0" y="7.0" text="OIL REFINERY"/>
+	<minion x="2.0" y="12.0" essential="true" dialog="Your planet's oil reserves will fuel our industry..." type="WATER"/>
+	<minion x="20.0" y="5.0" essential="false" />
+	<minion x="2.0" y="3.0" essential="false" />
+	<solid x="4.0" y="0.0"/>
+	<solid x="12.0" y="0.0"/>
+	<solid x="11.0" y="15.0"/>
+	<solid x="12.0" y="14.0"/>
+	<solid x="13.0" y="13.0"/>
+	<solid x="16.0" y="11.0"/>
+	<solid x="15.0" y="10.0"/>
+	<solid x="14.0" y="9.0"/>
+	<solid x="13.0" y="8.0"/>
+	<solid x="12.0" y="7.0"/>
+	<solid x="11.0" y="6.0"/>
+	<solid x="10.0" y="5.0"/>
+	<solid x="8.0" y="9.0"/>
+	<solid x="9.0" y="9.0"/>
+	<solid x="6.0" y="7.0"/>
+	<solid x="7.0" y="8.0"/>
+	<solid x="5.0" y="6.0"/>
+	<solid x="16.0" y="12.0"/>
+	<solid x="16.0" y="13.0"/>
+	<solid x="5.0" y="5.0"/>
+	<solid x="12.0" y="12.0"/>
+	<solid x="11.0" y="11.0"/>
+	<solid x="10.0" y="10.0"/>
+	<solid x="10.0" y="15.0"/>
+	<solid x="16.0" y="16.0"/>
+	<solid x="17.0" y="17.0"/>
+	<solid x="18.0" y="18.0"/>
+	<solid x="9.0" y="16.0"/>
+	<solid x="8.0" y="17.0"/>
+	<solid x="7.0" y="18.0"/>
+	<solid x="16.0" y="15.0"/>
+	<solid x="16.0" y="14.0"/>
+	<solid x="3.0" y="2.0"/>
+	<solid x="13.0" y="2.0"/>
+	<solid x="7.0" y="9.0"/>
+	<solid x="6.0" y="9.0"/>
+	<solid x="5.0" y="9.0"/>
+	<solid x="4.0" y="9.0"/>
+	<solid x="4.0" y="10.0"/>
+	<solid x="4.0" y="11.0"/>
+	<solid x="10.0" y="11.0"/>
+	<solid x="3.0" y="11.0"/>
+	<solid x="2.0" y="11.0"/>
+	<solid x="1.0" y="11.0"/>
+	<solid x="3.0" y="1.0"/>
+	<solid x="13.0" y="1.0"/>
+	<solid x="3.0" y="0.0"/>
+	<solid x="13.0" y="0.0"/>
+	<solid x="14.0" y="2.0"/>
+	<solid x="2.0" y="2.0"/>
+	<leftSlope x="12.0" y="15.0"/>
+	<leftSlope x="13.0" y="14.0"/>
+	<leftSlope x="10.0" y="16.0"/>
+	<leftSlope x="9.0" y="17.0"/>
+	<leftSlope x="8.0" y="18.0"/>
+	<leftSlope x="7.0" y="19.0"/>
+	<leftSlope x="17.0" y="34.0"/>
+	<leftSlope x="16.0" y="35.0"/>
+	<leftSlope x="15.0" y="36.0"/>
+	<leftSlope x="8.0" y="29.0"/>
+	<leftSlope x="7.0" y="30.0"/>
+	<leftSlope x="6.0" y="31.0"/>
+	<leftSlope x="5.0" y="32.0"/>
+	<leftSlope x="4.0" y="33.0"/>
+	<leftSlope x="3.0" y="34.0"/>
+	<leftSlope x="2.0" y="35.0"/>
+	<leftSlope x="14.0" y="37.0"/>
+	<leftSlope x="13.0" y="38.0"/>
+	<leftSlope x="12.0" y="39.0"/>
+	<leftSlope x="11.0" y="40.0"/>
+	<rightSlope x="14.0" y="10.0"/>
+	<rightSlope x="13.0" y="9.0"/>
+	<rightSlope x="12.0" y="8.0"/>
+	<rightSlope x="11.0" y="7.0"/>
+	<rightSlope x="10.0" y="6.0"/>
+	<rightSlope x="15.0" y="11.0"/>
+	<rightSlope x="16.0" y="17.0"/>
+	<rightSlope x="17.0" y="18.0"/>
+	<rightSlope x="15.0" y="16.0"/>
+	<rightSlope x="18.0" y="30.0"/>
+	<rightSlope x="19.0" y="31.0"/>
+	<rightSlope x="20.0" y="32.0"/>
+	<rightSlope x="21.0" y="33.0"/>
+	<rightSlope x="22.0" y="34.0"/>
+	<rightSlope x="23.0" y="35.0"/>
+	<rightSlope x="18.0" y="19.0"/>
+	<rightSlope x="19.0" y="20.0"/>
+	<rightSlope x="20.0" y="21.0"/>
+	<rightSlope x="21.0" y="22.0"/>
+	<rightSlope x="22.0" y="23.0"/>
+	<rightSlope x="23.0" y="24.0"/>
+	<rightSlope x="24.0" y="25.0"/>
+	<rightSlope x="25.0" y="26.0"/>
+	<rightSlope x="26.0" y="27.0"/>
+	<rightSlope x="27.0" y="28.0"/>
+	<rightSlope x="28.0" y="29.0"/>
+	<rightSlope x="29.0" y="30.0"/>
+	<rightSlope x="30.0" y="31.0"/>
+	<rightSlope x="31.0" y="32.0"/>
+	<rightSlope x="32.0" y="33.0"/>
+	<rightSlope x="33.0" y="34.0"/>
+	<rightSlope x="34.0" y="35.0"/>
+	<rightSlope x="35.0" y="36.0"/>
+	<rightSlope x="36.0" y="37.0"/>
+	<rightSlope x="17.0" y="29.0"/>
+	<rightSlope x="16.0" y="28.0"/>
+	<rightSlope x="15.0" y="27.0"/>
+	<prop x="12.0" y="26.0" type="BALL"/>
+	<prop x="18.0" y="32.0" type="BALL"/>
+	<well id="249e0f06-417d-46fd-8498-690a2e56a027" minX="5.0" minY="10.0" maxX="10.0" maxY="12.0" percentFull="0.0" affinity="WATER"/>
+	<well id="f5e187d6-050b-4692-97f1-49a49c2d7ace" minX="4.0" minY="0.0" maxX="13.0" maxY="3.0" percentFull="0.3" affinity="OIL"/>
+	<vat minX="4.0" minY="35.0" maxX="5.0" maxY="36.0" type="OIL"/>
+	<vat minX="6.0" minY="32.0" maxX="7.0" maxY="33.0" type="OIL"/>
+	<vat minX="10.0" minY="26.0" maxX="14.0" maxY="28.0" type="OIL"/>
+	<vat minX="14.0" minY="39.0" maxX="16.0" maxY="41.0" type="OIL"/>
+	<vat minX="9.0" minY="47.0" maxX="12.0" maxY="50.0" type="OIL"/>
+	<trapdoor width="4.0" x="6.0" y="5.0">
+		<wellActivationID>249e0f06-417d-46fd-8498-690a2e56a027</wellActivationID>
+	</trapdoor>
+	<gear radius="1.4142135" rotatesRight="true" x="19.0" y="17.0">
+		<wellActivationID>f5e187d6-050b-4692-97f1-49a49c2d7ace</wellActivationID>
+	</gear>
+	<gear radius="1.0" rotatesRight="false" x="17.0" y="13.0">
+		<wellActivationID>f5e187d6-050b-4692-97f1-49a49c2d7ace</wellActivationID>
+	</gear>
+	<gear radius="1.4142135" rotatesRight="true" x="17.0" y="10.0">
+		<wellActivationID>f5e187d6-050b-4692-97f1-49a49c2d7ace</wellActivationID>
+	</gear>
+	<gear radius="1.4142135" rotatesRight="false" x="3.0" y="9.0">
+		<wellActivationID>f5e187d6-050b-4692-97f1-49a49c2d7ace</wellActivationID>
+	</gear>
+	<gear radius="2.828427" rotatesRight="true" x="1.0" y="18.0">
+		<wellActivationID>f5e187d6-050b-4692-97f1-49a49c2d7ace</wellActivationID>
+	</gear>
+	<gear radius="1.4142135" rotatesRight="true" x="3.0" y="16.0">
+		<wellActivationID>f5e187d6-050b-4692-97f1-49a49c2d7ace</wellActivationID>
+	</gear>
+	<gear radius="1.4142135" rotatesRight="false" x="1.0" y="15.0">
+		<wellActivationID>f5e187d6-050b-4692-97f1-49a49c2d7ace</wellActivationID>
+	</gear>
+	<gear radius="0.0" rotatesRight="false" x="4.0" y="19.0">
+		<wellActivationID>f5e187d6-050b-4692-97f1-49a49c2d7ace</wellActivationID>
+	</gear>
+	<gear radius="1.0" rotatesRight="false" x="4.0" y="19.0">
+		<wellActivationID>f5e187d6-050b-4692-97f1-49a49c2d7ace</wellActivationID>
+	</gear>
+	<gear radius="1.4142135" rotatesRight="false" x="14.0" y="3.0">
+		<wellActivationID>f5e187d6-050b-4692-97f1-49a49c2d7ace</wellActivationID>
+	</gear>
+	<gear radius="1.4142135" rotatesRight="false" x="16.0" y="3.0">
+		<wellActivationID>f5e187d6-050b-4692-97f1-49a49c2d7ace</wellActivationID>
+	</gear>
+	<gear radius="0.0" rotatesRight="false" x="19.0" y="4.0">
+		<wellActivationID>f5e187d6-050b-4692-97f1-49a49c2d7ace</wellActivationID>
+	</gear>
+	<gear radius="0.0" rotatesRight="false" x="18.0" y="4.0">
+		<wellActivationID>f5e187d6-050b-4692-97f1-49a49c2d7ace</wellActivationID>
+	</gear>
+	<gear radius="1.4142135" rotatesRight="false" x="18.0" y="3.0">
+		<wellActivationID>f5e187d6-050b-4692-97f1-49a49c2d7ace</wellActivationID>
+	</gear>
+	<gear radius="1.4142135" rotatesRight="false" x="20.0" y="3.0">
+		<wellActivationID>f5e187d6-050b-4692-97f1-49a49c2d7ace</wellActivationID>
+	</gear>
+	<gear radius="1.4142135" rotatesRight="false" x="22.0" y="3.0">
+		<wellActivationID>f5e187d6-050b-4692-97f1-49a49c2d7ace</wellActivationID>
+	</gear>
+</level>

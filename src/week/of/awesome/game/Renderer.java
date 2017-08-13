@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.Texture.TextureWrap;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -18,13 +17,19 @@ import week.of.awesome.framework.RenderService;
 
 public class Renderer {
 	
+	private static final int CURSOR_SIZE = 40;
+	
 	private static final Color COLOUR_CAST = new Color(247f/255f, 170f/255f, 255f/255f, 1f);
 	private static final Color ALIEN_GREEN = new Color(0.5f, 1, 0.5f, 1);
 	
 	private Vector2 tmpPos = new Vector2();
+	private GraphicsResources resources;
 	private RenderService gfx;
 	
 	private FluidRenderer fluidRenderer;
+	
+	private Vector2 cursorPos = new Vector2();
+	private Texture cursorTex;
 	
 	private Texture minionTex;
 	private Texture minionLookingDownTex;
@@ -32,6 +37,7 @@ public class Renderer {
 	private Texture ballPropTex;
 	private Texture gearTex;
 	private Texture aimTex;
+	private Texture indicatorTex;
 	private Texture dominoTex;
 	private Texture spaceshipTex;
 	
@@ -57,6 +63,7 @@ public class Renderer {
 	
 	public Renderer(RenderService gfx, GraphicsResources resources) {
 		this.gfx = gfx;
+		this.resources = resources;
 		this.fluidRenderer = new FluidRenderer(gfx, resources);
 		
 		this.bgTex = resources.newTexture("screens/background.png");
@@ -64,12 +71,15 @@ public class Renderer {
 		this.vignetteTex = resources.newTexture("screens/vignette.png");
 		this.vignetteTex.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		
+		this.cursorTex = resources.newTexture("sprites/cursor.png");
+		
 		this.minionTex = resources.newTexture("sprites/minion.png");
 		this.minionLookingDownTex = resources.newTexture("sprites/minion_lookDown.png");
 		this.minionSquashedTex = resources.newTexture("sprites/squashedMinion.png");
 		this.ballPropTex = resources.newTexture("sprites/ballprop.png");
 		this.gearTex = resources.newTexture("sprites/gear.png");
 		this.aimTex = resources.newTexture("sprites/aim.png");
+		this.indicatorTex = resources.newTexture("sprites/indicator.png");
 		this.dominoTex = resources.newTexture("sprites/domino.png");
 		this.spaceshipTex = resources.newTexture("sprites/spaceship.png");
 		
@@ -91,6 +101,10 @@ public class Renderer {
 		this.dialogTextFont = resources.newFont("fonts/CASTWO1.fnt");
 	}
 	
+	public void setMouse(int x, int y) {
+		cursorPos.set(x, y - CURSOR_SIZE);
+	}
+	
 	public void preDraw(Scene scene) {
 		fluidRenderer.updateRendering(scene.getDroplets(), scene.getWells());
 	}
@@ -104,6 +118,14 @@ public class Renderer {
 			gfx.drawFont(bgTextFont, bgText.text, textPos.x, textPos.y, 0.8f);
 		}
 		
+		
+		for (DecalSpec decal : scene.getLevel().decals) {
+			Vector3 decalPos = new Vector3(decal.position.x, decal.position.y, 0).mul(worldTransform);
+			Texture decalTex = resources.newTexture(decal.texture);
+			gfx.draw(decalTex, new Vector2(decalPos.x, decalPos.y), decalTex.getWidth(), decalTex.getHeight(), 1f);
+		}
+		
+		
 		gfx.drawScreen(vignetteTex, false, 0.3f);
 		
 		
@@ -115,8 +137,8 @@ public class Renderer {
 		for (Well well : scene.getWells()) {
 			float width = well.getMaxPosition().x - well.getMinPosition().x;
 			float height = well.getMaxPosition().y - well.getMinPosition().y - wellHeightFudge;
-			gfx.draw(wellEmptyTex, well.getMinPosition(), width, height, 0.05f);
-			gfx.drawTinted(wellHighlightTex, well.getMinPosition().cpy().add(0, height - wellIndicatorThickness), width, wellIndicatorThickness, FluidRenderer.typeToColour(well.getDropletAffinity()));
+			gfx.draw(wellEmptyTex, well.getMinPosition(), width, height, 0.06f);
+			gfx.drawTinted(wellHighlightTex, well.getMinPosition().cpy().add(0, height - wellIndicatorThickness), width, wellIndicatorThickness, well.getDropletAffinity().COLOUR);
 		}
 		
 		
@@ -140,42 +162,56 @@ public class Renderer {
 		
 		// platform elements that are behind water
 		for (Platform platform : scene.getPlatforms()) {
-			gfx.draw(platformRangeTex, platform.getBasePosition(), 1f, platform.getMaxHeight(), 0.5f);
-			gfx.draw(platformRangeTopTex, platform.getBasePosition().cpy().add(0, platform.getMaxHeight()-1), 1f, 1f, 0.5f);
+			gfx.draw(platformRangeTex, platform.getBasePosition(), 1f, platform.getMaxHeight(), 0.2f);
+			gfx.draw(platformRangeTopTex, platform.getBasePosition().cpy().add(0, platform.getMaxHeight()-1), 1f, 1f, 0.2f);
+			gfx.draw(platformShaftTex, platform.getBasePosition(), 1f, platform.getHeadPosition().y - platform.getBasePosition().y + 0.8f, 1f);
+			gfx.draw(platformTex, platform.getHeadPosition(), 1f, 1f, 1f);
 		}
 		
 		
 		fluidRenderer.compositeToScreen();
 		
+		// SOLIDS
 		Random floorRand = new Random(1);
-		for (Vector2 pos : scene.getSolids()) {
+		for (SolidSpec solid : scene.getLevel().solids) {
+			for (float y = solid.min.y; y < solid.max.y; ++y) {
+				for (float x = solid.min.x; x < solid.max.x; ++x) {
+					float topBloat = 0f;
+					float bottomFloat = floorRand.nextFloat() * 0.2f;
+					float leftBloat = floorRand.nextFloat() * 0.2f + 0f;
+					float rightBloat = floorRand.nextFloat() * 0.2f + 0f;
+					gfx.draw(floorTex, tmpPos.set(x, y).add(-leftBloat, topBloat-bottomFloat), 1f + leftBloat + rightBloat, 1f + topBloat + bottomFloat, 1f);
+				}
+			}
+		}
+		
+		for (Vector2 pos : scene.getLevel().leftSlopes) {
 			float topBloat = 0f;
 			float bottomFloat = floorRand.nextFloat() * 0.2f;
 			float leftBloat = floorRand.nextFloat() * 0.2f + 0f;
 			float rightBloat = floorRand.nextFloat() * 0.2f + 0f;
-			gfx.draw(floorTex, pos.cpy().add(-leftBloat, topBloat-bottomFloat), 1f + leftBloat + rightBloat, 1f + topBloat + bottomFloat, 1f);
+			gfx.draw(leftSlopeTex, tmpPos.set(pos).add(-leftBloat, topBloat-bottomFloat), 1f + leftBloat + rightBloat, 1f + topBloat + bottomFloat, 1f);
 		}
-		for (Vector2 pos : scene.getLeftSlopes()) {
-			gfx.draw(leftSlopeTex, pos, 1f, 1f, 1f);
-		}
-		for (Vector2 pos : scene.getRightSlopes()) {
-			gfx.draw(rightSlopeTex, pos, 1f, 1f, 1f);
-		}
-		
-		// platform elements that are in-front of water
-		for (Platform platform : scene.getPlatforms()) {
-			gfx.draw(platformShaftTex, platform.getBasePosition(), 1f, platform.getHeadPosition().y - platform.getBasePosition().y + 0.8f, 1f);
-			gfx.draw(platformBaseTex, platform.getBasePosition(), 1f, 1f, 1f);
-			gfx.draw(platformTex, platform.getHeadPosition(), 1f, 1f, 1f);
-		}
-		
-		for (TrapDoor trapdoor : scene.getTrapDoors()) {
-			tmpPos.set(trapdoor.getPosition()).sub(0.1f, 0.15f);
-			gfx.drawRotated(trapdoorTex, tmpPos, 2.5f, 0.6f, trapdoor.getRotation(), new Vector2(0, -0.4f));
+		for (Vector2 pos : scene.getLevel().rightSlopes) {
+			float topBloat = 0f;
+			float bottomFloat = floorRand.nextFloat() * 0.2f;
+			float leftBloat = floorRand.nextFloat() * 0.2f + 0f;
+			float rightBloat = floorRand.nextFloat() * 0.2f + 0f;
+			gfx.draw(rightSlopeTex, tmpPos.set(pos).add(-leftBloat, topBloat-bottomFloat), 1f + leftBloat + rightBloat, 1f + topBloat + bottomFloat, 1f);
 		}
 		
 		for (Gear gear : scene.getGears()) {
 			gfx.drawRotated(gearTex, gear.getPosition(), gear.getRadius()*2, gear.getRadius()*2, gear.getRotation(), new Vector2(-gear.getRadius() + 0.1f, -gear.getRadius()));
+		}
+		
+		// platform elements that are in-front of water
+		for (Platform platform : scene.getPlatforms()) {
+			gfx.draw(platformBaseTex, platform.getBasePosition(), 1f, 1f, 1f);
+		}
+		
+		for (TrapDoor trapdoor : scene.getTrapDoors()) {
+			tmpPos.set(trapdoor.getPosition()).sub(0.1f, 0.15f);
+			gfx.drawRotated(trapdoorTex, tmpPos, trapdoor.getWidth() + 0.5f, 0.6f, trapdoor.getRotation(), new Vector2(0, -0.4f));
 		}
 		
 		for (Minion m : scene.getMinions()) {
@@ -186,33 +222,28 @@ public class Renderer {
 			boolean flipX = !m.isDead() && m.getPosition().x > scene.getAimPos().x;
 			gfx.drawCenteredTinted(t, m.getPosition(), 1,1, flipX, c);
 		}
-		
-		if (scene.getActiveSprayPosition() != null) {
-			gfx.drawRotated(aimTex, scene.getActiveSprayPosition(), 2f, 2f, scene.getSprayDirection().angle(), new Vector2(-1f, -1f));
+				
+		for (Prop prop : scene.getProps()) {
+			if (prop.getType() == PropSpec.Type.BALL) {
+				final float radius = 0.6f;
+				gfx.drawRotated(ballPropTex, prop.getPosition(), radius*2f, radius*2f, prop.getRotation(), new Vector2(-radius, -radius));
+			}
 		}
 		
 		for (Prop prop : scene.getProps()) {
-			final float radius = 0.5f;
-			
-			switch (prop.getType()) {
-			case BALL:
-				gfx.drawRotated(ballPropTex, prop.getPosition(), radius*2f, radius*2f, prop.getRotation(), new Vector2(-radius, -radius));
-				break;
-			case BLOCK: // TODO
-				gfx.drawRotated(ballPropTex, prop.getPosition(), radius*2f, radius*2f, prop.getRotation(), new Vector2(-radius, -radius));
-				break;
-			case DOMINO:
+			if (prop.getType() == PropSpec.Type.DOMINO) {
 				gfx.drawRotated(dominoTex, prop.getPosition(), 0.4f, 2f, prop.getRotation(), new Vector2(-0.2f, 0));
-				break;
 			}
-			
 		}
 		
 		for (Spaceship s : scene.getSpaceships()) {
 			gfx.draw(spaceshipTex, s.getPosition(), 8f, 4f, 1f);
 		}
 		
-		
+		if (scene.getActiveMinion() != null) {
+			gfx.drawRotated(aimTex, scene.getActiveMinion().getPosition(), 2f, 2f, scene.getSprayDirection().angle(), new Vector2(-1f, -1f));
+		}
+				
 		// MINION SPEECH
 		gfx.setTransformMatrix(new Matrix4());
 		for (Minion m : scene.getMinions()) {
@@ -225,9 +256,14 @@ public class Renderer {
 			float dialogOffsetY = dialogLines.size() * dialogTextFont.getLineHeight();
 			
 			for (String line : dialogLines) {
-				gfx.drawFont(dialogTextFont,line, textPos.x, textPos.y + dialogOffsetY - lineOffsetY, 1f);
+				gfx.drawFont(dialogTextFont,line, textPos.x, textPos.y + dialogOffsetY - lineOffsetY, m.deathAnimationTween() * m.dialogFadeTween());
 				lineOffsetY += dialogTextFont.getLineHeight();
 			}
+		}
+		
+		gfx.draw(cursorTex, cursorPos, CURSOR_SIZE, CURSOR_SIZE, 1);
+		if (scene.getActiveMinion() != null) {
+			gfx.drawTinted(indicatorTex, cursorPos, 24, 24, scene.getActiveMinion().getDropletType().COLOUR);
 		}
 	}
 

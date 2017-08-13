@@ -23,10 +23,11 @@ public class Platform implements Activatable {
 	}
 	
 	@Override
-	public void activate() {
+	public void activate(WorldEvents events) {
 		++activationCounter;
 		if (activationCounter == spec.wellActivatorIDs.size()) {
 			isRaised = !isRaised;
+			events.platformActivated();
 		}
 	}
 	

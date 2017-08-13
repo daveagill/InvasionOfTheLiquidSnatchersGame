@@ -1,47 +1,91 @@
-<level name="test">
-	<minion x="2.0" y="9.0" dialog="Oh!;Don't mind us!;We are here to harvest your planet's resources."/>
-    <minion x="4.0" y="3.0"/>
-	<minion x="14.0" y="5.0" dialog="Your H2O powers our;saucerships. Help me fill this Energy-Well." type="WATER"/>
-	<solid x="7.0" y="0.0"/>
-	<solid x="6.0" y="0.0"/>
-	<solid x="4.0" y="2.0"/>
-	<solid x="4.0" y="1.0"/>
-	<solid x="4.0" y="0.0"/>
-	<solid x="5.0" y="0.0"/>
+<level music="Infinite Perspective.mp3">
+	<minion x="6.0" y="8.0" essential="true" dialog="Oh!;Don't mind us!;We are only here to harvest your natural resources."/>
+	<minion x="5.0" y="3.0" essential="true" dialog="It's a dangerous job mind you!"/>
+	<minion x="15.0" y="5.0" essential="true" dialog="Your H20 activate our Hydrolic systems!;Watch..." type="WATER"/>
 	<solid x="8.0" y="0.0"/>
+	<solid x="7.0" y="0.0"/>
+	<solid x="5.0" y="2.0"/>
+	<solid x="5.0" y="1.0"/>
+	<solid x="5.0" y="0.0"/>
+	<solid x="6.0" y="0.0"/>
 	<solid x="9.0" y="0.0"/>
 	<solid x="10.0" y="0.0"/>
 	<solid x="11.0" y="0.0"/>
 	<solid x="12.0" y="0.0"/>
-	<solid x="12.0" y="1.0"/>
-	<solid x="12.0" y="2.0"/>
-	<solid x="14.0" y="4.0"/>
-	<solid x="5.0" y="7.0"/>
-	<solid x="6.0" y="7.0"/>
+	<solid x="13.0" y="0.0"/>
+	<solid x="13.0" y="1.0"/>
+	<solid x="13.0" y="2.0"/>
+	<solid x="15.0" y="4.0"/>
 	<solid x="7.0" y="7.0"/>
 	<solid x="8.0" y="7.0"/>
 	<solid x="9.0" y="7.0"/>
 	<solid x="10.0" y="7.0"/>
 	<solid x="11.0" y="7.0"/>
-	<solid x="4.0" y="7.0"/>
 	<solid x="12.0" y="7.0"/>
+	<solid x="5.0" y="7.0"/>
 	<solid x="13.0" y="7.0"/>
 	<solid x="14.0" y="7.0"/>
 	<solid x="15.0" y="7.0"/>
-	<solid x="9.0" y="6.0"/>
-	<solid x="9.0" y="5.0"/>
-	<solid x="6.0" y="6.0"/>
-	<solid x="12.0" y="6.0"/>
 	<solid x="16.0" y="7.0"/>
-	<solid x="16.0" y="6.0"/>
-	<solid x="3.0" y="7.0"/>
-	<solid x="2.0" y="7.0"/>
-	<solid x="3.0" y="6.0"/>
-	<solid x="3.0" y="5.0"/>
+	<solid x="10.0" y="6.0"/>
+	<solid x="10.0" y="5.0"/>
+	<solid x="7.0" y="6.0"/>
+	<solid x="13.0" y="6.0"/>
 	<solid x="17.0" y="7.0"/>
+	<solid x="17.0" y="6.0"/>
 	<solid x="18.0" y="7.0"/>
-	<well id="dc6ee053-2dec-4e5c-9719-75cdf416ae12" minX="5.0" minY="1.0" maxX="12.0" maxY="3.0" affinity="WATER"/>
-	<spaceship x="9.0" y="8.0">
+	<solid x="16.0" y="13.0"/>
+	<solid x="15.0" y="13.0"/>
+	<solid x="11.0" y="13.0"/>
+	<solid x="5.0" y="13.0"/>
+	<solid x="1.0" y="13.0"/>
+	<solid x="2.0" y="7.0"/>
+	<solid x="4.0" y="2.0"/>
+	<solid x="3.0" y="2.0"/>
+	<solid x="1.0" y="7.0"/>
+	<solid x="1.0" y="8.0"/>
+	<solid x="2.0" y="3.0"/>
+	<solid x="2.0" y="2.0"/>
+	<solid x="4.0" y="7.0"/>
+	<leftSlope x="2.0" y="8.0"/>
+	<leftSlope x="3.0" y="3.0"/>
+	<leftSlope x="1.0" y="9.0"/>
+	<leftSlope x="2.0" y="4.0"/>
+	<rightSlope x="18.0" y="8.0"/>
+	<prop x="3.0" y="14.0" type="BALL"/>
+	<prop x="13.0" y="14.0" type="BALL"/>
+	<prop x="14.0" y="14.0" type="BALL"/>
+	<prop x="17.0" y="14.9" type="BALL"/>
+	<prop x="13.0" y="14.9" type="BALL"/>
+	<prop x="14.0" y="14.9" type="BALL"/>
+	<prop x="13.0" y="15.8" type="BALL"/>
+	<prop x="4.0" y="14.0" type="BALL"/>
+	<prop x="4.0" y="14.9" type="BALL"/>
+	<prop x="17.0" y="14.0" type="BALL"/>
+	<prop x="18.0" y="14.0" type="BALL"/>
+	<prop x="14.0" y="15.8" type="BALL"/>
+	<prop x="4.0" y="15.8" type="BALL"/>
+	<prop x="4.0" y="16.6" type="BALL"/>
+	<prop x="17.0" y="15.8" type="BALL"/>
+	<prop x="17.0" y="16.6" type="BALL"/>
+	<prop x="17.0" y="17.4" type="BALL"/>
+	<prop x="12.0" y="14.0" type="BALL"/>
+	<prop x="2.0" y="14.0" type="BALL"/>
+	<well id="dc6ee053-2dec-4e5c-9719-75cdf416ae12" minX="6.0" minY="1.0" maxX="13.0" maxY="3.0" percentFull="0.0" affinity="WATER"/>
+	<well id="3f8e14ae-852d-4547-8906-7628791fa34e" minX="0.0" minY="0.0" maxX="23.0" maxY="1.0" percentFull="1.0" affinity="WATER"/>
+	<platform height="4.0" x="6.0" y="7.0">
+		<wellActivationID>dc6ee053-2dec-4e5c-9719-75cdf416ae12</wellActivationID>
+	</platform>
+	<trapdoor width="3.0" x="2.0" y="13.0">
+		<wellActivationID>dc6ee053-2dec-4e5c-9719-75cdf416ae12</wellActivationID>
+	</trapdoor>
+	<trapdoor width="3.0" x="12.0" y="13.0">
+		<wellActivationID>dc6ee053-2dec-4e5c-9719-75cdf416ae12</wellActivationID>
+	</trapdoor>
+	<trapdoor width="3.0" x="17.0" y="13.0">
+		<wellActivationID>dc6ee053-2dec-4e5c-9719-75cdf416ae12</wellActivationID>
+	</trapdoor>
+	<spaceship silent="true" x="7.0" y="22.0">
 		<wellActivationID>dc6ee053-2dec-4e5c-9719-75cdf416ae12</wellActivationID>
 	</spaceship>
 </level>
