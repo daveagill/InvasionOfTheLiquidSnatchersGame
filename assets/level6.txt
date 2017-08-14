@@ -1,4 +1,4 @@
-<level music="Infinite Perspective.mp3">
+<level music="Danger Storm.mp3">
 	<bgText x="2.0" y="20.0" text="MAGMA FORGE"/>
 	<minion x="10.0" y="10.0" essential="true" type="WATER"/>
 	<minion x="20.0" y="9.0" essential="true" type="OIL"/>
@@ -112,7 +112,6 @@
 	<solid minX="15.0" minY="15.0" maxX="16.0" maxY="16.0"/>
 	<solid minX="17.0" minY="9.0" maxX="18.0" maxY="10.0"/>
 	<solid minX="21.0" minY="9.0" maxX="22.0" maxY="10.0"/>
-	<solid minX="18.0" minY="9.0" maxX="19.0" maxY="10.0"/>
 	<solid minX="10.0" minY="12.0" maxX="16.0" maxY="13.0"/>
 	<solid minX="15.0" minY="9.0" maxX="16.0" maxY="10.0"/>
 	<solid minX="14.0" minY="9.0" maxX="15.0" maxY="10.0"/>
@@ -138,6 +137,7 @@
 	<solid minX="29.0" minY="24.0" maxX="30.0" maxY="25.0"/>
 	<solid minX="30.0" minY="24.0" maxX="31.0" maxY="25.0"/>
 	<solid minX="28.0" minY="24.0" maxX="29.0" maxY="25.0"/>
+	<solid minX="19.0" minY="8.0" maxX="20.0" maxY="9.0"/>
 	<leftSlope x="27.0" y="9.0"/>
 	<leftSlope x="28.0" y="8.0"/>
 	<leftSlope x="29.0" y="7.0"/>
@@ -168,7 +168,6 @@
 	<prop x="12.0" y="7.0" type="BALL"/>
 	<prop x="16.0" y="16.0" type="BALL"/>
 	<prop x="22.0" y="12.0" type="BALL"/>
-	<prop x="18.0" y="10.0" type="BALL"/>
 	<prop x="21.0" y="10.0" type="BALL"/>
 	<prop x="3.8" y="15.0" type="DOMINO"/>
 	<prop x="4.6" y="15.0" type="DOMINO"/>
@@ -177,8 +176,9 @@
 	<prop x="7.0000005" y="15.0" type="DOMINO"/>
 	<prop x="7.8000007" y="15.0" type="DOMINO"/>
 	<prop x="9.0" y="16.0" type="BALL"/>
-	<well id="63ecf518-556f-4c15-96f4-b62ef144f3c5" minX="16.0" minY="6.0" maxX="19.0" maxY="8.0" percentFull="0.9" affinity="WATER"/>
-	<well id="7404afa6-50cb-4e49-a1d2-e163b77e7265" minX="1.0" minY="0.0" maxX="38.0" maxY="3.0" percentFull="0.38" affinity="MAGMA"/>
+	<prop x="17.0" y="10.0" type="BALL"/>
+	<well id="63ecf518-556f-4c15-96f4-b62ef144f3c5" minX="16.0" minY="6.0" maxX="19.0" maxY="8.0" percentFull="0.5" affinity="WATER"/>
+	<well id="7404afa6-50cb-4e49-a1d2-e163b77e7265" minX="1.0" minY="0.0" maxX="38.0" maxY="3.0" percentFull="0.4" affinity="MAGMA"/>
 	<well id="b50ac8db-51ed-4fae-b344-b28692b7e136" minX="7.0" minY="3.0" maxX="10.0" maxY="5.0" percentFull="0.0" affinity="WATER"/>
 	<well id="fde02ab6-2ad0-4510-9fbd-79d8ee95d27b" minX="10.0" minY="13.0" maxX="16.0" maxY="15.0" percentFull="0.7" affinity="OIL"/>
 	<vat minX="27.0" minY="10.0" maxX="28.0" maxY="12.0" type="MAGMA"/>

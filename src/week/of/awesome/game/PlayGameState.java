@@ -61,7 +61,7 @@ public class PlayGameState implements GameState {
 	private Sound minionSplatSound;
 	
 	
-	private int levelNum=6;
+	private int levelNum=1;
 	private Level level;
 	private Scene scene;
 	
@@ -84,10 +84,11 @@ public class PlayGameState implements GameState {
 			new WellBrush(Droplet.Type.WATER),
 			new WellBrush(Droplet.Type.MAGMA),
 			new WellBrush(Droplet.Type.OIL),
+			new WellBrush(Droplet.Type.WASTE),
 			new VatBrush(Droplet.Type.WATER),
 			new VatBrush(Droplet.Type.MAGMA),
 			new VatBrush(Droplet.Type.OIL),
-			new VatBrush(Droplet.Type.BLOOD),
+			new VatBrush(Droplet.Type.WASTE),
 			new PlatformBrush(),
 			new TrapDoorBrush(),
 			new BeamBrush(),
@@ -319,7 +320,7 @@ public class PlayGameState implements GameState {
 		if (sprayDropletPlayDelay > 0) { sprayDropletPlayDelay -= dt; }
 		
 		// toggle the mouse control scheme on space key
-		if (services.input.isJustDown(Keys.BACKSLASH)) {
+		/*if (services.input.isJustDown(Keys.BACKSLASH)) {
 			buildModeEnabled = !buildModeEnabled;
 			
 			this.scene.dispose();
@@ -354,7 +355,7 @@ public class PlayGameState implements GameState {
 		
 		if (services.input.isJustDown(Keys.U)) {
 			level.undo();
-		}
+		}*/
 		
 		if (levelNum > 1 && (services.input.isJustDown(Keys.SPACE) || services.input.isJustDown(Keys.R))) {
 			scene.killAllMinions();
@@ -389,7 +390,7 @@ public class PlayGameState implements GameState {
 	@Override
 	public void render(float dt) {
 		if (!buildModeEnabled) {
-			int scaleXY = (int) Math.min(services.gfx.getWidth() / (scene.getLevelSize().x + scene.getLevelSize().width), services.gfx.getHeight() / (scene.getLevelSize().y + scene.getLevelSize().height));
+			float scaleXY = Math.min(services.gfx.getWidth() / (scene.getLevelSize().x + scene.getLevelSize().width-1), services.gfx.getHeight() / (scene.getLevelSize().y + scene.getLevelSize().height-1));
 			scaleX = scaleXY;
 			scaleY = scaleXY;
 		}

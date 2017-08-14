@@ -1,0 +1,56 @@
+<level music="Infinite Perspective.mp3">
+	<minion x="11.0" y="12.0" essential="false" type="WASTE"/>
+	<minion x="4.0" y="6.0" essential="false" dialog="Goodbye!" type="OIL"/>
+	<minion x="4.0" y="12.0" essential="false" type="WATER"/>
+	<minion x="12.0" y="6.0" essential="false" type="MAGMA"/>
+	<solid minX="1.0" minY="11.0" maxX="6.0" maxY="12.0"/>
+	<solid minX="3.0" minY="8.0" maxX="4.0" maxY="11.0"/>
+	<solid minX="7.0" minY="8.0" maxX="8.0" maxY="12.0"/>
+	<solid minX="8.0" minY="9.0" maxX="10.0" maxY="10.0"/>
+	<solid minX="9.0" minY="10.0" maxX="10.0" maxY="12.0"/>
+	<solid minX="9.0" minY="8.0" maxX="10.0" maxY="9.0"/>
+	<solid minX="11.0" minY="11.0" maxX="14.0" maxY="12.0"/>
+	<solid minX="11.0" minY="8.0" maxX="12.0" maxY="11.0"/>
+	<solid minX="12.0" minY="9.0" maxX="13.0" maxY="10.0"/>
+	<solid minX="11.0" minY="7.0" maxX="12.0" maxY="8.0"/>
+	<solid minX="9.0" minY="7.0" maxX="10.0" maxY="8.0"/>
+	<solid minX="7.0" minY="7.0" maxX="8.0" maxY="8.0"/>
+	<solid minX="3.0" minY="7.0" maxX="4.0" maxY="8.0"/>
+	<solid minX="3.0" minY="1.0" maxX="4.0" maxY="6.0"/>
+	<solid minX="4.0" minY="1.0" maxX="6.0" maxY="2.0"/>
+	<solid minX="4.0" minY="3.0" maxX="5.0" maxY="4.0"/>
+	<solid minX="12.0" minY="7.0" maxX="14.0" maxY="8.0"/>
+	<solid minX="4.0" minY="5.0" maxX="6.0" maxY="6.0"/>
+	<solid minX="7.0" minY="1.0" maxX="8.0" maxY="6.0"/>
+	<solid minX="8.0" minY="5.0" maxX="9.0" maxY="6.0"/>
+	<solid minX="8.0" minY="4.0" maxX="9.0" maxY="5.0"/>
+	<solid minX="9.0" minY="3.0" maxX="10.0" maxY="4.0"/>
+	<solid minX="9.0" minY="2.0" maxX="10.0" maxY="3.0"/>
+	<solid minX="10.0" minY="2.0" maxX="11.0" maxY="3.0"/>
+	<solid minX="10.0" minY="1.0" maxX="11.0" maxY="2.0"/>
+	<solid minX="10.0" minY="3.0" maxX="11.0" maxY="4.0"/>
+	<solid minX="10.0" minY="4.0" maxX="11.0" maxY="5.0"/>
+	<solid minX="10.0" minY="5.0" maxX="11.0" maxY="6.0"/>
+	<solid minX="12.0" minY="1.0" maxX="13.0" maxY="6.0"/>
+	<solid minX="13.0" minY="5.0" maxX="14.0" maxY="6.0"/>
+	<solid minX="13.0" minY="1.0" maxX="14.0" maxY="2.0"/>
+	<solid minX="14.0" minY="2.0" maxX="15.0" maxY="3.0"/>
+	<solid minX="14.0" minY="4.0" maxX="15.0" maxY="5.0"/>
+	<solid minX="14.0" minY="3.0" maxX="15.0" maxY="4.0"/>
+	<well id="27047587-1301-4377-818a-399993f5f0cc" minX="9.0" minY="4.0" maxX="10.0" maxY="5.0" percentFull="0.0" affinity="WATER"/>
+	<well id="e68bb97a-3781-48a7-b154-6a4e1a06a149" minX="8.0" minY="10.0" maxX="9.0" maxY="11.0" percentFull="0.0" affinity="WASTE"/>
+	<well id="ac42d2bd-bd7d-4a28-a93f-7feee6bbf8e4" minX="6.0" minY="0.0" maxX="7.0" maxY="1.0" percentFull="0.0" affinity="MAGMA"/>
+	<well id="1092cec4-f4db-42ef-bded-062fe9524677" minX="11.0" minY="0.0" maxX="12.0" maxY="1.0" percentFull="0.0" affinity="OIL"/>
+	<spaceship silent="false" x="25.0" y="3.0">
+		<wellActivationID>ac42d2bd-bd7d-4a28-a93f-7feee6bbf8e4</wellActivationID>
+	</spaceship>
+	<spaceship silent="false" x="26.0" y="8.0">
+		<wellActivationID>1092cec4-f4db-42ef-bded-062fe9524677</wellActivationID>
+	</spaceship>
+	<spaceship silent="false" x="24.0" y="12.0">
+		<wellActivationID>27047587-1301-4377-818a-399993f5f0cc</wellActivationID>
+	</spaceship>
+	<spaceship silent="false" x="25.0" y="17.0">
+		<wellActivationID>e68bb97a-3781-48a7-b154-6a4e1a06a149</wellActivationID>
+	</spaceship>
+</level>

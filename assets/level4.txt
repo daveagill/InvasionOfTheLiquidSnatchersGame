@@ -1,4 +1,4 @@
-<level music="Infinite Perspective.mp3">
+<level music="Myst on the Moor.mp3">
 	<bgText x="13.0" y="7.0" text="OIL REFINERY"/>
 	<minion x="2.0" y="12.0" essential="true" dialog="Your planet's oil reserves will fuel our industry..." type="WATER"/>
 	<minion x="20.0" y="5.0" essential="false" />

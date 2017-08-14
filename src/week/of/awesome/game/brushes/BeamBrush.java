@@ -18,15 +18,12 @@ public class BeamBrush implements Brush {
 	@Override
 	public void endBrush(Level level, int x, int y, float worldX, float worldY) {
 		int minX = Math.min(initialX, x);
-		int minY = Math.min(initialY, y);
-		
 		int maxX = Math.max(initialX, x) + 1;
-		int maxY = Math.max(initialY, y) + 1;
 		
 		BeamSpec spec = new BeamSpec();
-		spec.min = new Vector2(minX, minY);
-		spec.max = new Vector2(maxX, maxY);
-		spec.dir = BeamSpec.Direction.RIGHT;
+		spec.min = new Vector2(minX, initialY);
+		spec.max = new Vector2(maxX, initialY + 1);
+		spec.dir = x > initialX ? BeamSpec.Direction.RIGHT : BeamSpec.Direction.LEFT;
 		
 		level.beams.add(spec);
 		level.undoHistory.add(spec);
